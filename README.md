@@ -23,7 +23,7 @@ owner-review build, not a public release or an open-source licensing grant.
 - **Yasnac MX-3** — COM6, 9600 baud, 7E2, XON/XOFF, DTR/RTS on, CR/LF,
   50 ms line delay. Receive completes after five seconds without data.
   NUL bytes are removed and other whitespace is preserved.
-- **Haas Classic Control (RS-232)** — field-tested successfully on an older
+- **Haas Classic Control (RS-232)** — historically field-tested in the baseline edition on an older
   Haas machine at 9600 baud, 7E1, and XON/XOFF. Confirm Haas Settings 11–14,
   25, and 37 because individual machine configurations can differ.
 - **FANUC 0i / 16i / 18i / 21i (RS-232)** — a 9600 baud, 7E2, XON/XOFF

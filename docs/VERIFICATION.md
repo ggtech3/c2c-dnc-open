@@ -31,3 +31,9 @@ Local tooling checks do not establish that hosted GitHub Actions completed; chec
 This is an isolated new source repository. Existing editions and their data remain untouched. Revert a repository change or rebuild a prior reviewed commit rather than modifying a known-good installation. Generated test output and source hashes remain local ignored evidence. Do not commit runtime logs or real NC programs.
 
 Confirm the published branch and exact SHA with Git/GitHub when publishing. Repository access settings and checks must be verified separately; documentation is not a branch-protection policy.
+
+## Hosted verification
+
+Private repository creation and main upload were verified on GitHub. Initial remote commit 6401b6bbdbb7268fd6ed8b02e745cd4732be6b42 matched the local root commit. The [initial hosted run](https://github.com/ggtech3/c2c-dnc-open/actions/runs/42533326665) passed build, source hygiene, serial simulation and self-contained publication checks.
+
+That run reported a deprecated Node 20 runtime in checkout v4. The workflow was then updated to official checkout v7.0.1, pinned to 3d3c42e5aac5ba805825da76410c181273ba90b1, which uses Node 24 and retains persist-credentials=false. Check the [Actions page](https://github.com/ggtech3/c2c-dnc-open/actions) for the exact current commit's result. No deployment, public visibility, collaborator grants or new credentials were created.

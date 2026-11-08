@@ -30,7 +30,7 @@ Completed checks link to [repository verification](../../docs/VERIFICATION.md), 
 - [x] T015 Run final application build/regressions and record command, environment, outcome and gaps.
 - [x] T016 Review final source/config/tooling diff and conduct a deliberate second review; close critical acceptance failures.
 - [x] T017 Scan final staged files and clean history for sensitive data and private workstation references before private push.
-- [ ] T018 Verify authorized private remote visibility and pushed commit; record remaining validation and owner decisions without making public.
+- [x] T018 Verify authorized private remote visibility and pushed commit; record remaining validation and owner decisions without making public.
 
 ## Future gates (not authorized by this baseline)
 
