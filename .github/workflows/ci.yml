@@ -1,0 +1,40 @@
+name: Build and simulated checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Set up .NET
+        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          dotnet-version: '10.0.x'
+      - name: Check source hygiene
+        shell: pwsh
+        run: ./tools/Check-SourceHygiene.ps1
+      - name: Restore locked dependencies
+        run: dotnet restore WindowsDnc.csproj --locked-mode
+      - name: Build application
+        run: dotnet build WindowsDnc.csproj -c Release --no-restore
+      - name: Check serial simulation
+        shell: pwsh
+        run: ./Tests/SerialSimulation/Run.ps1
+      - name: Publish self-contained Windows x64 candidate
+        shell: pwsh
+        run: ./build.ps1

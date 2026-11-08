@@ -1,0 +1,32 @@
+# Build, packaging and user-specific state
+**/bin/
+**/obj/
+/publish/
+/artifacts/
+/releases/
+*.user
+*.suo
+.vs/
+.idea/
+# Private material must never be committed
+/Developer support/
+/LicenseBuilder/
+*.pfx
+*.p12
+*.key
+*.pem
+.env
+.env.*
+!.env.example
+*.log
+# Simulation-generated source/evidence
+/Tests/SerialSimulation/SerialDncService.cs
+/Tests/SerialSimulation/DncTextProcessor.cs
+/Tests/SerialSimulation/CncProfile.cs
+/Tests/SerialSimulation/source-manifest.json
+/Tests/SerialSimulation/results.txt
+# Spec Kit local tooling and Python caches
+.venv-specify/
+.venv/
+**/__pycache__/
+*.pyc
