@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  <ItemGroup><PackageReference Include="System.IO.Ports" Version="10.0.0" /></ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../CncProfile.cs" Link="CncProfile.cs" />
+    <Compile Include="../../CommunityConfiguration.cs" Link="CommunityConfiguration.cs" />
+    <Compile Include="../../CommunityCatalog.cs" Link="CommunityCatalog.cs" />
+    <EmbeddedResource Include="../../Assets/community-configurations.json" LogicalName="C2CDnc.CommunityConfigurations.json" />
+  </ItemGroup>
+</Project>

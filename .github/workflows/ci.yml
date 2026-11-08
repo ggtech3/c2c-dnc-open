@@ -32,6 +32,9 @@ jobs:
         run: dotnet restore WindowsDnc.csproj --locked-mode
       - name: Build application
         run: dotnet build WindowsDnc.csproj -c Release --no-restore
+      - name: Check community configurations
+        shell: pwsh
+        run: ./Tests/CommunityProfiles/Run.ps1
       - name: Check serial simulation
         shell: pwsh
         run: ./Tests/SerialSimulation/Run.ps1

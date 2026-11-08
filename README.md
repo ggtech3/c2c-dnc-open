@@ -191,6 +191,14 @@ and [Siemens SINUMERIK 802D sl Instruction Manual](https://support.industry.siem
 Only one application can open a COM port at a time. Close terminal programs or
 other DNC software before starting an operation.
 
+## Community configurations
+
+Use **Share setup** to export one selected profile's portable communication settings with controller, cable and test details. Review the file before manually sharing it with the maintainer. Use **Community configurations** to preview a shared file or a bundled reviewed entry and add a new custom copy with your own COM port.
+
+Imports never replace existing profiles. File reports, maintainer-reviewed reports and independent confirmation have distinct meanings; none guarantees compatibility with your machine. The initial reviewed catalog is empty until genuine contributions are reviewed. No data is uploaded automatically.
+
+See [sharing, importing and review instructions](docs/COMMUNITY-CONFIGURATIONS.md). The repository remains private; no public contribution program or website change is included.
+
 ## Hardware note
 
 StarTech.com USB-to-RS-232 adapters are recommended as a starting point. The
