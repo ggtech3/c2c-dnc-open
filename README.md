@@ -89,6 +89,8 @@ Extract the complete application ZIP to a folder before launching
 `System.IO.Ports.dll` companion files.
 
 1. Connect a proper USB-to-RS-232 adapter and confirm the CNC cable pinout.
+   StarTech.com adapters are the recommended starting point; see the
+   [hardware note](#hardware-note) below.
 2. Select the CNC profile. Its default COM port appears automatically.
 3. If Windows assigned another port, type it into the COM port box.
 4. To send the whole program immediately, choose **Send program**. The small
@@ -190,6 +192,12 @@ Only one application can open a COM port at a time. Close terminal programs or
 other DNC software before starting an operation.
 
 ## Hardware note
+
+StarTech.com USB-to-RS-232 adapters are recommended as a starting point. The
+project owner reports that they have worked with every configuration tested so
+far. This recommendation reflects that experience, not a guarantee for every
+adapter model, driver, cable or CNC configuration. Confirm the adapter driver,
+cable pinout, controller settings and flow control for your own setup.
 
 RS-232 voltage levels are not TTL/USB serial levels. Use a genuine RS-232
 adapter and the cable/pinout required by the CNC. Verify protective ground,
