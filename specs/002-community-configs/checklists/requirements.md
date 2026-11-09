@@ -1,5 +1,5 @@
 # Specification Quality Checklist
-Feature: [Community configurations](../spec.md). Reviewed 2026-11-08.
+Feature: [Simple community profile sharing](../spec.md). Refined/reviewed 2026-11-09.
 - [x] User value, priorities and independent acceptance scenarios defined.
 - [x] Required sections completed; no essential clarification remains.
 - [x] Requirements testable; success criteria measurable without implementation details.

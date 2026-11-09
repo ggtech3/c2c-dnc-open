@@ -6,8 +6,10 @@ On Windows with .NET 10, run from the repository root:
     pwsh -File Tests/CommunityProfiles/Run.ps1
     pwsh -File Tests/SerialSimulation/Run.ps1
     pwsh -File tools/Check-SourceHygiene.ps1 -IncludeUntracked
-    pwsh -File build.ps1
+    pwsh -File build.ps1 -OutputDirectory 'artifacts/Community Simplified Candidate'
 
-Use only synthetic data and disconnected UI checks. Open Share setup, cancel, reopen, fill safe sample context, preview and export. Open Community configurations: empty reviewed catalog should be explained. Import the sample, cancel once, then add with a distinct local name/COM. Import again and verify independent copies. Check persistence after restart without touching commercial data. Test malformed/version-mismatched files and cancelled dialogs. Do not start send/receive or use real CNC files. Exact outcomes and any UI verification limits belong in verification.md.
+Use synthetic data and disconnected checks. Share starts with one blank public machine/controller description and optional notes. Review exact text, cancel/back, revise it and verify fresh preview. Check keyboard navigation, minimum size/DPI/dark theme, action failure/retry and duplicate clicks. Do not invoke a real clipboard/browser action during unattended tests. Do not actually post to GitHub. Sign-in/access/paste/Submit behavior is a separate manual check with explicit operator participation.
 
-For disconnected manual GUI checks use Tests/CommunityUiSmoke/README.md. The harness opens real production dialogs with synthetic in-memory profiles and no real profile storage or serial service. Do not start an additional desktop automation session while someone is using the computer.
+Community configurations explains the empty catalog; imported files show Not confirmed. Open a synthetic file, cancel once, then add with distinct local name/COM. Reimport another copy. Check restart persistence only in an isolated test data directory. Malformed/version-mismatched files and cancellation must preserve existing profiles. No send/receive or real CNC files.
+
+See Tests/CommunityUiSmoke/README.md for the synthetic harness and its current action boundaries. Do not take over the desktop while the user is active. Record exact passed/failed/untested outcomes in verification.md.

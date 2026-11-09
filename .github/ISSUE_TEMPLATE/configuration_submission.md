@@ -1,27 +1,11 @@
 ---
-name: Private configuration submission
-about: Organize review of a sanitized setup in this private repository
+name: Share a CNC profile
+about: Paste the reviewed profile copied by the app
 labels: ''
 ---
 
-This is private owner review, not a public contribution program or a grant of redistribution rights. Use only if you already have authorized repository access. Otherwise contact the maintainer through your existing private channel. Never paste raw profiles.json, real NC programs, logs, machine serial numbers, customer information or secrets.
+Paste the text from C2C DNC's **Share > Copy and open GitHub** into this description, replacing these instructions. Then choose **Submit new issue**. No file attachment or pull request is needed.
 
-## Sanitized contribution
-Attach the single file created by Share setup after reviewing its full preview. Confirm the title, all context fields and contributor alias are suitable for the authorized reviewers.
+Before posting, remove customer/shop names, serial numbers, private paths, programs, logs or secrets. This repository is private and requires existing access. Submission is not permission for public redistribution.
 
-## Scope of reported testing
-- Exact machine/controller and firmware/options:
-- Machine-side communication settings:
-- Adapter model/driver and cable pinout:
-- Application version and date:
-- Send to machine memory result:
-- Receive result:
-- Drip-feed result:
-- Failures, limitations and untested operations:
-
-## Review notes (maintainer)
-- Privacy, schema and completeness review:
-- User-reported by default; no certification inferred:
-- Separate confirmation tester/date/evidence, if actually available:
-- Proposed catalog ID/revision:
-- Redistribution/attribution permission status (public publication is not authorized by this issue):
+A new profile is **Not confirmed**. You can describe what worked or add a follow-up comment, but only reviewed separate machine-test evidence can earn **Confirmed** for the stated setup and operation. The original profiles stay available.

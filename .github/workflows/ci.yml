@@ -35,6 +35,12 @@ jobs:
       - name: Check community configurations
         shell: pwsh
         run: ./Tests/CommunityProfiles/Run.ps1
+      - name: Check community form controls without showing windows
+        shell: pwsh
+        run: |
+          dotnet restore Tests/CommunityUiSmoke/CommunityUiSmoke.csproj --locked-mode
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet run --no-restore --project Tests/CommunityUiSmoke/CommunityUiSmoke.csproj -c Release -- --check-controls
       - name: Check serial simulation
         shell: pwsh
         run: ./Tests/SerialSimulation/Run.ps1

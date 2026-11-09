@@ -1,73 +1,47 @@
-# Feature Specification: Community configurations
+# Feature Specification: Simple community profile sharing
 
-**Feature Branch**: `002-community-configs`
-**Created**: 2026-11-08
-**Status**: Ready for implementation
-**Input**: Implement community-contributed or verified configurations in the private preview.
+**Branch**: `002-community-configs` | **Created**: 2026-11-08 | **Refined**: 2026-11-09
+**Status**: Implemented; visible manual GUI validation remains open
+**Input**: Preserve original profiles; use Confirmed / Not confirmed; minimize effort for nontechnical machinists; prefer GitHub, not the website.
 
-## User Scenarios & Testing
+## User stories and acceptance
+### US1 - Share one profile (P1)
+Select a profile, choose Share, enter one public machine/controller description and optional notes, review the exact sanitized submission, then choose Copy and open GitHub. Sign in if needed, paste into the issue body and click Submit. No file handling, Git installation, tokens or pull request is required.
+- One required description (maximum 120 characters), optional notes (maximum 2000); both initially blank. No private profile name/notes are prefilled.
+- Application version is automatic; details not entered are explicitly unprovided, results NotTested and date empty. Prose cannot infer test results or confirmation.
+- Preview identifies private ggtech3/c2c-dnc-open as destination and discloses GitHub sign-in/repository access requirements, manual posting, and local clipboard/history exposure.
+- Explicit Copy and open GitHub copies the exact reviewed post, then opens a fixed HTTPS issue URL containing no user data. User pastes/submits. No automatic post/upload. Secondary local JSON save remains available.
+- Clipboard failure prevents browser launch. Browser failure clearly says text was copied and supports retry. Cancel/Back has no sharing effect. Repeated clicks cannot queue duplicate launches.
+- Only selected portable settings and deliberately entered text are shared. COM assignment, local identity/name, guidance/source URL, programs, logs, paths and other profiles are excluded. Entered notes remain inert serialized JSON text, not active Markdown.
+Independent test: minimal synthetic submission round-trips settings, exclusions, fixed URL, cancellation and action failures without real clipboard/browser use.
 
-### User Story 1 - Share a selected configuration (Priority: P1)
-A machinist exports only the selected profile's transfer settings, enters a public configuration title and controller, machine-side, cable/adapter and test details, and reviews the resulting contribution before manually sharing it with the maintainer.
-**Independent Test**: Export a synthetic profile, inspect every exported field, and round-trip the transfer settings.
-**Acceptance Scenarios**:
-1. Given local profiles and programs, exporting one configuration includes only its transfer settings and deliberately entered contribution details, not COM assignment, local profile identity, paths, programs, logs or account information.
-2. Given missing required controller/cable/test context, export explains what is missing and creates no contribution file.
-3. Cancelling review or the save dialog leaves profiles and existing files unchanged. Export never sends information online.
+### US2 - Safely try a shared profile (P1)
+Keep strict version-1 JSON validation, complete preview, explicit local name/COM and fresh-copy import. Preserve all 18 originals, customizations and hidden selections. Cancel or failed persistence changes nothing. No scripts/network fetch/serial operations. External files are Not confirmed regardless of text claims; editable local copies inherit no ongoing confirmation badge.
+Independent test: repeated valid import, malformed inputs, failed save and preservation checks.
 
-### User Story 2 - Safely try a shared configuration (Priority: P1)
-A machinist opens a contribution, previews all settings, test claims and cautions, enters a local name and COM port, and explicitly adds a new custom profile without overwriting anything.
-**Independent Test**: Import a valid synthetic contribution twice and reject malformed examples without changing existing profiles.
-**Acceptance Scenarios**:
-1. All accepted imports create a fresh custom identity. Existing built-in, customized and hidden profiles retain their settings and visibility.
-2. Malformed, unsupported, oversized, incomplete and invalid-value contributions are rejected before any profile change. Contribution files cannot contain scripts, commands or machine operations.
-3. Review is read-only until Add. Cancellation and failed persistence leave profiles unchanged. Repeated imports never replace an existing profile.
-4. File-provided claims cannot award trusted review or confirmation status. No serial port is opened by browsing, import or export.
+### US3 - Understand two labels (P2)
+Only Confirmed / Not confirmed are visible confirmation statuses. Confirmed requires reviewed bundled evidence from a separate actual tester for the exact original setup and operations both testers reported Passed. Maintainer data review and software tests do not qualify. Failed/untested operations remain outside confirmation. Internal schema fields can remain richer for compatibility. Empty catalog is honest; originals are not retroactively marked confirmed. No automatic updates or replacements.
+Independent test: both catalog states, file preview, missing/invalid evidence and local provenance.
 
-### User Story 3 - Distinguish reported and confirmed configurations (Priority: P2)
-A machinist can browse the maintainer-curated catalog and see whether a configuration is user-reported or independently confirmed, what controller/cable setup and operations were tested, and the limitations of the evidence.
-**Independent Test**: Use synthetic catalog entries in automated tests for each status and confirm the shipped empty-state message makes no unsupported hardware claim.
-**Acceptance Scenarios**:
-1. User reports and independent confirmation have separate labels. Independent confirmation requires a separate tester and concrete evidence, not merely maintainer review or a passing software test.
-2. Catalog entries are data-only reviewed additions with provenance, revision and review notes. They use the same safe preview/add flow.
-3. The initial catalog is honestly empty until real contributions are reviewed. The existing 18 defaults remain available and are not relabeled verified.
-4. The maintainer has a documented private submission/review process and a repeatable validation check. No public intake, account requirement, repository publication or website change is introduced.
+## Functional requirements
+- FR-001: One-profile sharing with one required public description and optional notes.
+- FR-002: Exact-post privacy review with destination, sign-in/access, manual submission and clipboard disclosure.
+- FR-003: Bounded strict parser and backward-compatible version-1 packets.
+- FR-004: Safe preview/new-copy import with explicit local name/port.
+- FR-005: Preserve original profiles, customizations, hidden selections, serial behavior and edition isolation.
+- FR-006: Two visible confirmation statuses, evidence-bound original setup only, no ongoing local-copy guarantee.
+- FR-007: Fixed GitHub issue destination after explicit action; no automatic posting, authentication service, website or publication.
+- FR-008: Handle busy transfer, cancel/back/repeat, clipboard/browser and persistence failures safely.
+- FR-009: Synthetic privacy/schema/status/action tests plus baseline regressions; honestly record GUI, hosted and hardware limits.
 
-### Edge Cases
-Duplicate names and repeated imports; invalid enum/range/type/missing fields; duplicate or unknown fields; null collections; excessive file/text/depth; claimed verification in a file; catalog collisions; unsupported schema; null idle timeout; unsaved export details; failed writes; busy transfer; edited local copies; empty catalog.
-
-## Requirements
-### Functional Requirements
-- **FR-001**: Export a single selected profile using an explicit allowlist and user-entered sharing context.
-- **FR-002**: Preview the complete contribution and privacy warning before file creation; no automatic submission.
-- **FR-003**: Validate versioned bounded data-only files before import; fail closed on unexpected fields and invalid settings.
-- **FR-004**: Preview every transfer setting and test claim before explicitly adding a fresh custom profile with locally chosen name/port.
-- **FR-005**: Preserve all 18 defaults, customizations, hidden selections, serial behavior and edition isolation. Do not silently overwrite.
-- **FR-006**: Separate untrusted file reports, maintainer-reviewed user reports and independent confirmation, with evidence and no universal compatibility promise.
-- **FR-007**: Ship an offline reviewed catalog and private submission/review instructions, initially with zero unsubstantiated entries.
-- **FR-008**: Disable community mutations during transfers, handle cancellation/repeated actions/persistence errors without partial profile changes, and keep local edits from inheriting a current verification promise.
-- **FR-009**: Add automated synthetic boundary, privacy, persistence and regression checks; document hardware and clean-machine limits.
-
-### Key Entities
-- Contribution: versioned transfer settings, public title, controller, machine configuration, cable/adapter, test results and limitations.
-- Catalog entry: contribution plus maintainer identity, revision, review date and evidence-backed review status.
-- Local imported profile: independent editable copy with local identity and COM assignment, retaining a provenance note but no ongoing certification.
-
-## Success Criteria
-### Measurable Outcomes
-- **SC-001**: Every transfer setting survives an export/import round trip, with zero unrelated local fields in the contribution.
-- **SC-002**: Every rejected or cancelled import leaves the original profile list unchanged; two accepted imports yield two new identities.
-- **SC-003**: Every displayed trusted status has matching catalog evidence; zero file claims or simulated tests create trusted confirmation.
-- **SC-004**: Existing serial simulations and all 18 baseline profile comparisons pass unchanged.
-
-## Assumptions
-- First version is offline/manual sharing, not an online submission service. A future optional catalog update must be separately designed and cannot overwrite local profiles.
-- Maintainer uses an already-established private channel while licensing and public release remain undecided.
-- No new hardware validation is available. No catalog entry or claim will be fabricated.
-- Review status describes the original contributed setup, not changes to local copies or a guarantee for other machines.
-
-## Risk and preserved behavior
-Untrusted configuration data affects future machine-facing settings. Strict validation, full preview, local COM selection, fresh-copy-only import and explicit cautions reduce accidental use. Free-text details may contain private information, so they are deliberate inputs requiring user review. No new networking or executable payload is accepted. SerialDncService, DncTextProcessor, CncProfile defaults, existing editions and live-machine behavior remain untouched.
+## Success criteria
+- SC-001: All 18 portable settings round-trip with zero unrelated local fields.
+- SC-002: Primary sharing needs one required input and no local-file handling.
+- SC-003: Zero data-bearing URLs, automatic posts or untrusted confirmation promotions.
+- SC-004: Rejected/cancelled imports preserve profiles and original serial simulations/defaults pass unchanged.
 
 ## Clarification review
-No essential ambiguity requires user input: the already-agreed offline contribution/review model supplies a conservative first release. Online catalog updates, public launch and live-machine testing are deferred.
+Latest user direction supersedes the long-form offline sharing UI, not its safety boundaries. This feature implements user-triggered browser opening, not automatic submission. Separate owner authorization governs source push, pull requests and merge; no access change or public publication is implied. Existing authorized collaborators alone can use the private repo; public intake is a later owner decision. No essential clarification remains. Import is still offline; only the explicit sharing action opens a browser.
+
+## Risk and preserved behavior
+Untrusted settings affect future machine-facing behavior: retain strict parsing, preview, local port selection and fresh-copy persistence. Clipboard/browser are explicit side effects. Keep user text out of URLs, copy only after privacy review, and never equate launch with submission. Use a fixed recipient. Minimal inputs cannot fabricate evidence. SerialDncService, DncTextProcessor, CncProfile defaults, existing profile storage, editions and user data remain unchanged.

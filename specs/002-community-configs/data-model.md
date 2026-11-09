@@ -8,3 +8,8 @@ Catalog: schema version, entries with stable unique ID/revision, contribution, s
 Local copy: fresh GUID, IsBuiltIn=false, local name and COM port, imported settings, provenance guidance limited to historical source/revision/status and caution about edits. Existing profile store remains the persistence boundary.
 
 Strict parse: maximum file 64 KiB, JSON maximum depth 16, duplicate/unknown members rejected, all contract members required except explicitly nullable/optional strings, bounded text and plain text display. No arbitrary metadata or executable members.
+
+## Simplified sharing projection (2026-11-09)
+No schema-version change. CommunitySharing accepts one public machine/controller description (nonblank single line, maximum 120) and optional plain-text notes (maximum 2000). Description becomes title and machine combined description; controller says Not supplied separately. Unentered firmware, machine-side, adapter and cable context is Not supplied. Version is automatic, date empty, all structured results NotTested, alias null. Notes become limitations or Not supplied. Earlier complete packets continue to validate. This is explicitly unprovided metadata, not fabricated tests.
+
+Confirmation UI maps UserReported to Not confirmed and IndependentlyConfirmed to Confirmed; internal proof requirements remain unchanged. Local copies carry historical provenance, not a live status.

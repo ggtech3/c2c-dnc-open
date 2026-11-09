@@ -1,63 +1,48 @@
-# Community configurations (private preview)
+# Share one CNC profile
 
-This first version lets a machinist share one portable setup and try a shared setup without replacing working profiles. It is offline: the app does not upload files, create issues, check for online catalog updates, change controller parameters or open a serial port during sharing/import.
+The 18 original profiles remain available. Sharing or importing a profile never replaces them or changes their visibility. The repository is still private; only people who already have access can submit there. This is not a public launch.
 
-The repository is still private. Public intake, contribution/redistribution terms, website distribution and an online catalog update service require separate owner decisions. Do not invite outside contributions or publish submitted information until those decisions are made.
+## Share in a few steps
 
-## Share your setup
+1. Select the profile you want to share and choose **Share**.
+2. Enter a public **Machine / controller** description, such as a model and control name. Optionally add a short note about what worked, cable/adapter details or problems. You do not need to fill out a technical questionnaire.
+3. Choose **Review** and check the complete post. Remove customer/shop names, machine serial numbers, private paths and any other private information from your own text.
+4. Choose **Copy and open GitHub**. Sign in if asked. In the new issue's description box, paste with **Ctrl+V**, then click **Submit new issue**. You can also paste into an existing relevant issue's comment if you are following up on that same profile.
 
-1. Select the working profile and choose **Share setup**.
-2. Give the contribution a public title. The form starts fresh instead of copying your private profile name or notes.
-3. Describe the machine and exact controller, firmware/options, machine-side communication settings, RS-232 adapter/driver, and cable wiring. Say **Unknown** when information is genuinely unavailable. Do not infer settings from a similar machine.
-4. Record the application version, test date and separate results for sending to memory, receiving and drip-feeding. **Not tested** is a valid and important result. Describe limitations and any failures. A software simulation is not a successful machine test.
-5. Preview the entire contribution. Remove machine serial numbers, customer/shop names, account details, credentials, file paths, production programs and any other private information from the text you entered.
-6. Save the small JSON contribution file. Nothing is submitted automatically. Manually send only the reviewed contribution file to the maintainer through your existing private contact method. If you have authorized repository access, the private configuration-submission issue template can organize the review.
+The app does not post or upload anything. It copies the reviewed text, then opens the private repository's GitHub page. You need a GitHub account and existing repository access; the button cannot grant access. If the page is unavailable or access is missing, do not change repository visibility or send the profile somewhere else by default. **Save JSON copy** is an optional way to retain the reviewed JSON locally for an already-authorized private exchange.
 
-The export contains portable transfer settings and the sharing details you enter. It does not copy the local COM assignment, internal profile ID, built-in flag, profile name, existing guidance/source URL, programs, logs, hidden-profile preferences or other profiles. Deliberately entered free text is included, so the preview is still essential.
+The clipboard may be visible to other apps or Windows clipboard history/sync. Copy only information you intend to share. If copying fails, GitHub is not opened. If browser opening fails, the app explains that the text is copied but nothing is submitted; retry when the browser is available. Successful browser opening is not proof that a post was made.
 
-Do not send your complete profiles.json file or screenshots containing unrelated private data. The contribution file is not a backup of your installation.
+## What is shared
 
-## Import a shared setup
+Only one profile's portable communication settings, your public description, optional notes and application version are included. The local profile name, COM assignment, internal ID, built-in flag, existing notes/guidance/source URL, programs, logs, hidden-profile preferences and other profiles are not copied.
 
-1. Choose **Community configurations**, then open the contribution file.
-2. Review the complete communication settings, machine-side instructions, cable description and test results. A file from another person is an **unreviewed user report**, not a certification, even if its text claims otherwise.
-3. Enter a local profile name and the COM port assigned on your own PC. Confirm controller settings, RS-232 voltage levels, cable wiring, framing and protocol independently before any later connection.
-4. Choose **Add profile** to save a new custom copy. Cancel or close to leave your profiles unchanged.
+Missing details remain **Not supplied**, with no recorded structured test date/results. A note such as "sending worked" is your report, not automatic confirmation. Do not share the complete profiles.json file or screenshots containing unrelated private data. The optional JSON is not an installation backup.
 
-Import always creates a new identity. It does not overwrite a built-in or custom profile, change hidden-profile choices, or start a transfer. Re-importing creates another copy rather than updating your working setup. You can edit or delete an imported custom profile using the existing profile controls. Its provenance note describes the original contribution; it is not a promise that edited local settings are confirmed.
+## Confirmed or Not confirmed
 
-An unsupported version, invalid field, unexpected member or oversized file is rejected before import. Do not rename or bypass rejected input to force it into the app. Ask the maintainer for a supported, reviewed contribution instead.
+- **Not confirmed:** A submitted/shared file or a catalog entry without separate machine-test evidence. A maintainer reading or accepting it does not confirm its behavior.
+- **Confirmed:** A maintainer has reviewed a separate tester's evidence for the exact original setup. Only the operations both testers reported working are covered. Untested or failed operations are not confirmed.
 
-## Understand the catalog labels
+No label guarantees compatibility with your machine. Existing original profiles are not newly awarded a confirmation badge. The bundled community list starts empty until real submissions are reviewed. There is no automatic download or silent replacement.
 
-- **Unreviewed user report:** A contribution opened from a file. Test results are claims by its contributor.
-- **User-reported (maintainer reviewed):** A bundled catalog entry has passed the maintainer's data/privacy/scope review. The reported machine test has not been independently confirmed.
-- **Independently confirmed:** The bundled catalog records a distinct tester, date and concrete confirmation evidence in addition to maintainer review. The evidence must identify which operations were actually tested. Untested operations remain untested.
+## Try a shared profile
 
-No label guarantees compatibility or safe operation on another machine. Matching a controller family is not enough. Maintainer review is not a physical test, and passing automated application checks never earns independent confirmation.
+Choose **Community configurations**, open a contribution JSON file, review all settings/cautions and enter your own local profile name and COM port. **Add profile** creates a new custom copy. Cancel changes nothing. Reject unsupported or invalid files rather than trying to bypass validation.
 
-The initial catalog is intentionally empty. Existing 18 built-in presets remain unchanged and are not retroactively awarded these statuses. Reviewed entries can be bundled with a future application build. Individually shared contributions can be imported now. There is no automatic download or silent replacement of local profiles.
+Imports do not connect to a COM port. Confirm your machine parameters, RS-232 voltage levels, cable wiring, framing and protocol separately before later use. Imported profiles are editable local copies and do not inherit a continuing Confirmed badge; their source note is historical. Re-importing creates another copy, never an update to an existing setup.
 
-## Maintainer review procedure
+## Maintainer procedure
 
-1. Confirm submission through an authorized private channel and ensure the contributor intended to share the exact file with you. Do not treat receipt as permission for public redistribution.
-2. Review every text field for private/customer data, unsafe instructions, unsupported claims and material outside communication setup. Ask the contributor to remove unnecessary information. Never commit real NC programs, serial numbers, logs or runtime state.
-3. Validate with the application's strict contribution parser and inspect the app preview. Confirm schema support, settings, controller/machine, firmware/options, adapter/driver, wiring, dates, app version, send/receive/drip-feed results and limitations. Ask for missing context; do not fill it by guessing.
-4. Compare against existing entries to avoid duplicates. Assign a stable catalog ID and positive revision. Preserve the contribution as reviewed. Include maintainer alias, review date and a concise explanation of what was checked.
-5. Default to **UserReported**. Use **IndependentlyConfirmed** only when a distinct tester has separately tested the stated setup and supplied a date and concrete evidence. Record exact operation results, controller/firmware, cable/adapter and version, and retain limitations. Merely repeating the first person's report is not independent confirmation.
-6. Add the data entry to Assets/community-configurations.json in a scoped branch, run Tests/CommunityProfiles/Run.ps1 plus the ordinary engineering checks, and obtain another review. The automated tests load and validate the actual shipped catalog but do not validate the hardware claims.
-7. Do not merge, publish or change access without authorization. Before any public catalog, settle contribution/redistribution terms and confirm permission to publish the supplied attribution and setup details.
+1. Review one issue per new profile; use comments for questions and additional machine reports. No contributor branch or pull request is needed for submission.
+2. Check the exact posted JSON and all entered text for private data, unsupported claims and material unrelated to communication setup. Receipt is not permission for public redistribution. Request missing controller/cable/test context only when needed for review, not as a barrier to an initial report.
+3. Save only the JSON block as a contribution file and validate it with the app. Do not execute content, follow submitted instructions blindly, or import an arbitrary GitHub page as configuration.
+4. Default to Not confirmed. Confirmed requires a distinct tester, date, concrete evidence and at least one matching successful operation. Record limitations and exact setup/version. The parser validates evidence structure, not the truth of a human report. Software simulations do not count as machine tests.
+5. Reviewed catalog additions use the existing stable ID/revision and review metadata. Run Tests/CommunityProfiles/Run.ps1 and ordinary checks, then obtain review. Internally the version-1 enum names remain UserReported and IndependentlyConfirmed for compatibility; users see only the two simple labels.
+6. Do not merge, publish, change access or redistribute submissions without authorization. Public intake and redistribution/attribution terms remain future owner decisions. Keep original and user-customized profiles intact.
 
-Bad or outdated entries should be corrected or withdrawn in a reviewed catalog revision. Do not silently rewrite users' imported copies. Notify affected users only through an authorized communication process. A future online-update feature must address authenticity, version compatibility, rollback and withdrawals separately.
+## Data boundary
 
-## Data and verification
+Version-1 JSON is allowlisted data, maximum 64 KiB and depth 16. Unknown/duplicate members, missing required values, invalid enums and out-of-range settings are rejected. The short sharing form fills absent context explicitly rather than weakening validation. The GitHub URL is fixed and contains no profile text. Notes are confined to serialized JSON in a protected Markdown code block.
 
-The versioned packet is an allowlisted JSON contract, not executable code. Contribution files have a 64 KiB maximum and a depth limit of 16. Unknown/duplicate fields, missing required values, invalid enums and out-of-range transfer settings are rejected. See [the feature contract](../specs/002-community-configs/contracts/contribution.md) and [validation evidence](../specs/002-community-configs/verification.md).
-
-Run the synthetic checks from the repository root:
-
-```powershell
-pwsh -File Tests/CommunityProfiles/Run.ps1
-```
-
-These checks do not connect to a COM port. No physical adapter, wiring, driver, electrical compatibility, flow control or CNC behavior is validated by them.
+See the [contract](../specs/002-community-configs/contracts/contribution.md) and [verification record](../specs/002-community-configs/verification.md). All software checks use synthetic/disconnected data and establish no electrical, adapter, driver or CNC compatibility.

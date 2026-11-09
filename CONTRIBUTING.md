@@ -37,4 +37,4 @@ Do not add code or assets you lack rights to contribute. Project licensing and a
 
 ## Configuration contributions
 
-Use the sanitized Share setup flow and [private review procedure](docs/COMMUNITY-CONFIGURATIONS.md). Do not submit raw runtime profiles, programs or logs. File claims never award a trusted catalog badge. Public intake and redistribution terms remain separate owner decisions.
+Use **Share**, review the sanitized post, then **Copy and open GitHub**, paste and submit. No file attachment, branch or pull request is required for a profile report. Existing private-repository access is required. See the [private review procedure](docs/COMMUNITY-CONFIGURATIONS.md). Do not submit raw runtime profiles, programs or logs. Reports start **Not confirmed**; text claims alone never award **Confirmed**. Public intake and redistribution terms remain separate owner decisions.

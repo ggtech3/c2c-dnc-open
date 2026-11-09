@@ -11,6 +11,7 @@
     <Compile Include="../../CncProfile.cs" Link="CncProfile.cs" />
     <Compile Include="../../CommunityConfiguration.cs" Link="CommunityConfiguration.cs" />
     <Compile Include="../../CommunityCatalog.cs" Link="CommunityCatalog.cs" />
+    <Compile Include="../../CommunitySharing.cs" Link="CommunitySharing.cs" />
     <EmbeddedResource Include="../../Assets/community-configurations.json" LogicalName="C2CDnc.CommunityConfigurations.json" />
   </ItemGroup>
 </Project>

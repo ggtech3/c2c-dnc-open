@@ -1,31 +1,22 @@
-# Implementation Plan: Community configurations
-**Branch**: `002-community-configs` | **Date**: 2026-11-08 | **Spec**: [spec.md](spec.md)
+# Implementation Plan: Simple community profile sharing
+**Branch**: `002-community-configs` | **Refined**: 2026-11-09 | **Spec**: [spec.md](spec.md)
 
-## Summary
-Add an offline Share setup / Community configurations workflow to the existing WinForms application. Export an allowlisted versioned packet. Validate and preview external data, then add a new profile only after local name/COM selection. Bundle a reviewed catalog as an embedded resource; start empty rather than fabricate confirmation. Document private manual intake.
+## Summary and technical context
+Refine the existing local implementation rather than replace its validated boundary. Keep C#/.NET 10 WinForms, System.Text.Json, version-1 DTO, empty embedded catalog and transactional import. No new package, authentication client or online catalog. Original presets/serial/text processing remain byte-identical.
 
-## Technical Context
-C# / .NET 10 Windows Forms; System.Text.Json and existing System.IO.Ports dependency. No new packages or network client. Keep new transfer DTO and validation independent from UI. CncProfile defaults, SerialDncService and DncTextProcessor stay byte-identical. Tests use synthetic data and temporary directories, never the real profile store or a COM port.
+## Design
+Add a pure CommunitySharing helper with CreateQuickContribution(profile, description, notes, appVersion), BuildGitHubPost(contribution), and a fixed SubmissionUrl for ggtech3/c2c-dnc-open/issues/new. The public description becomes title and the combined machine/controller description; Controller explicitly says it was not supplied separately. Unprovided details use a literal Not supplied marker; date empty, operation results NotTested and alias null. This preserves the version-1 parser without inventing context. Required description maximum 120 characters, optional notes maximum 2000. App version is automatic.
 
-## Constitution Check
-Before implementation: I preserve machine-facing behavior with no engine/default edits. II preview data remains isolated. III synthetic tests and explicit limits. IV no networking, secrets, publication or executable payload. V feature spec/plan/tasks and two reviews. VI private/manual review only. All gates pass. Recheck after final diff.
+Build one exact post with explanatory text and serialized JSON in a Markdown-safe fenced block. Untrusted text must not escape the fence. The fixed URL contains only static title parameters, never user data, a file path or payload. No dependency on an issue template that is not yet on main. Imported JSON remains usable by existing maintainers; no import of arbitrary comments or online fetching.
 
-## Project Structure
-- CommunityConfiguration.cs: portable records, allowlist, bounds, parsing, conversion, display text.
-- CommunityCatalog.cs and Assets/community-configurations.json: curated embedded entries and status/evidence validation.
-- CommunityProfilesDialog.cs and ShareProfileDialog.cs: catalog/import preview and contribution form.
-- MainForm.cs: entry points, transfer busy gating and save-before-list-mutation import.
-- Tests/CommunityProfiles/: dependency-light test executable and Run.ps1.
-- docs/COMMUNITY-CONFIGURATIONS.md and private issue template: submission/review procedure.
-- specs/002-community-configs/: specification lifecycle and validation evidence.
+ShareProfileDialog becomes two fields, then privacy review with Copy and open GitHub primary, optional Save copy and Cancel/Back. It copies before browser launch, handles clipboard contention without opening, and reports launch failure without claiming posting. Explicit action is disabled/re-entry guarded during execution. Show the recipient, current private access restriction, sign-in and paste/Submit instructions. No real browser or clipboard action during automated verification.
 
-## Design and Risk
-Use a strict schema with required fields, finite enumerations, bounded UTF-8 size/depth/text and rejection of unknown/duplicate members. Portable settings exclude ID, built-in flag, COM port, guidance and source URL. Export title and sharing details are fresh deliberate inputs, not copied from private profile text. Full preview uses plain text only; no links execute. External imports are always unreviewed user reports regardless of claimed review. Trusted catalog status exists only in the reviewed embedded resource and requires evidence. Local copies get provenance text saying settings may be changed and status is not a guarantee. There is no status promotion button and no network update.
+CommunityCatalog/CommunityConfiguration display Confirmed or Not confirmed. Keep internal review enum and evidence invariants for schema compatibility. Confirmation is for original evidence only; local editable copies have no live badge. CommunityProfilesDialog displays two labels and concise help. All original profiles remain intact.
 
-Profile persistence is staged: construct a candidate list, save it first, then replace in-memory state. Unique IDs and duplicate-safe names prevent replacements. Import/export buttons are disabled during transfer; dialogs are modal. Retain existing storage format and all existing profile fields. Empty catalog is an expected state.
+## Constitution check
+I: no engine/default changes. II: data/edition isolation retained. III: synthetic checks, no hardware claims. IV: no publication or secrets; fixed explicit browser destination only. V: revised spec/plan/tasks and independent review. VI: private repo/owner decisions retained. No exceptions. Browser opening supersedes the earlier UI-only offline assumption, not automatic posting or public intake restrictions.
 
-## Verification Strategy
-Add targeted round-trip, schema, bounds, malicious input, trust-label, duplicate identity and failure/cancellation checks. Exercise all 18 default conversions without modifying default definitions. Run locked restore, Release build, community checks, existing serial simulation, source hygiene, publish packaging and disconnected GUI checks where supported. Verify final diff and independent second review. No release, network publication, real serial operation or hardware claim.
+## Work ownership and verification
+Core: CommunitySharing.cs plus CommunityConfiguration/CommunityCatalog labels. UI: ShareProfileDialog, CommunityProfilesDialog and button wording in MainForm. Tests: new helper tests, status assertions, linked compile items and no-side-effect action tests where supported. Coordinator: docs/specs/template, integration, final review and evidence.
 
-## Dependencies and Delivery
-Core data contract precedes UI/tests. Core and UI use disjoint files, then integration/testing. User docs may proceed in parallel. Final evidence reconciles tasks, outcomes and limitations. Local branch only until publication is authorized.
+Run locked restore, Release build, community tests, existing serial simulation, source hygiene and publish to a new ignored candidate directory. Review final diff and independent review. Do not take the active user's desktop or actually post/launch browser/copy clipboard. Record GUI paste/sign-in/repeated-click behavior as untested unless covered with isolated delegate tests. Owner subsequently authorized private push/pull/merge. Follow the draft-PR and maintainer-review workflow; do not bypass review gates or publish publicly.

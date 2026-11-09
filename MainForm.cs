@@ -325,7 +325,7 @@ public sealed class MainForm : Form
         themePanel.Controls.Add(aboutButton);
         themePanel.Controls.Add(profileVisibilityButton);
         themePanel.Controls.Add(darkModeToggle);
-        ConfigureGroupedButton(shareProfileButton, "Share setup…", "profile");
+        ConfigureGroupedButton(shareProfileButton, "Share", "profile");
         shareProfileButton.AutoSize = true;
         shareProfileButton.Height = 28;
         shareProfileButton.Click += (_, _) => ShareSelectedProfile();

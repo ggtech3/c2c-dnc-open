@@ -31,3 +31,15 @@
 Dependencies: T001-T002 before implementation. T003 core API precedes UI/tests; T004/T007 may run independently. T005-T012 integrate before T013-T016. Parallel workers own disjoint files. No task authorizes push/merge/public release or hardware operations.
 
 T015 remains partially complete: initial empty catalog/cancel and fresh fields observed; full GUI matrix interrupted. See verification.md for exact passed, failed and unrun stages. No implementation gap found in final convergence; no duplicate convergence task appended for this existing open validation item.
+
+## Phase 7: User-requested simplification (2026-11-09)
+Prior completed tasks describe the first iteration at 008ae8e; the following tasks reconcile the latest scope before delivery.
+- [x] T017 Refine spec.md, plan.md and analysis for one-field GitHub sharing, two labels and unchanged safety boundaries.
+- [x] T018 [US1] Add pure quick-contribution and fixed-destination post generation in CommunitySharing.cs: description maximum 120, optional notes maximum 2000, explicit unprovided context, no inferred test claims, no user data in URL, Markdown-safe exact JSON.
+- [x] T019 [US1] Simplify ShareProfileDialog.cs and MainForm.cs entry wording; privacy preview, explicit copy then launch, private/access/sign-in warning, failure/re-entry/cancel handling and optional save.
+- [x] T020 [US3] Show Confirmed / Not confirmed in CommunityConfiguration.cs, CommunityCatalog.cs and CommunityProfilesDialog.cs; preserve confirmation invariants and no inherited local badge.
+- [x] T021 [P] [US1] Update docs/COMMUNITY-CONFIGURATIONS.md, README.md, .github/ISSUE_TEMPLATE/configuration_submission.md and spec design/quickstart/contract for paste-based private submission.
+- [x] T022 Add helper/privacy/Markdown/status/action-boundary tests in Tests/CommunityProfiles; run final aggregate build/regression/hygiene/publish checks and record verification.md.
+- [x] T023 Independently review final source and reconcile all revised acceptance requirements in specs/002-community-configs/verification.md; record manual GUI gap, no push/publication and rollback.
+
+Dependencies: T017 before T018-T021. T018 API precedes T019 integration; T020 can run alongside UI in disjoint source files. T021 is parallel documentation. T022/T023 follow integrated source. Existing T015 remains the manual GUI matrix; do not duplicate or mark passed without observations.

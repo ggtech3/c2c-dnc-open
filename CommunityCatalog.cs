@@ -85,11 +85,17 @@ public static class CommunityCatalog
             throw new FormatException("Review date cannot precede independent testing.");
     }
 
+    public static string GetConfirmationLabel(CommunityCatalogEntry entry)
+    {
+        ValidateEntry(entry);
+        return entry.Status == CommunityReviewStatus.IndependentlyConfirmed ? "Confirmed" : "Not confirmed";
+    }
     public static string BuildPreview(CommunityCatalogEntry entry)
     {
         ValidateEntry(entry);
-        string status = entry.Status == CommunityReviewStatus.IndependentlyConfirmed
-            ? "INDEPENDENTLY CONFIRMED ORIGINAL SETUP\r\nConfirmation covers only operations marked Passed by both the contributor and separate tester below. Failed and untested operations are not confirmed." : "MAINTAINER-REVIEWED USER REPORT (not independent confirmation)";
+        string status = GetConfirmationLabel(entry) + (entry.Status == CommunityReviewStatus.IndependentlyConfirmed
+            ? "\r\nConfirmation covers only the original setup and operations marked Passed by both the contributor and separate tester below. Failed and untested operations are not confirmed."
+            : "\r\nMaintainer data review does not establish confirmation.");
         string confirmation = entry.Confirmation is { } c
             ? $"\r\nSeparate tester: {c.Tester}\r\nConfirmation date: {c.TestDate}\r\nIndependent evidence: {c.Evidence}\r\nIndependent send: {c.SendResult}\r\nIndependent receive: {c.ReceiveResult}\r\nIndependent drip-feed: {c.DripFeedResult}" : "";
         return $"{status}\r\nCatalog ID: {entry.Id}\r\nRevision: {entry.Revision}\r\nReviewer: {entry.Reviewer}\r\nReview date: {entry.ReviewDate}\r\nReview notes: {entry.ReviewNotes}{confirmation}\r\n\r\n" +
@@ -100,6 +106,6 @@ public static class CommunityCatalog
     {
         ValidateEntry(entry);
         return CommunityConfiguration.CreateLocalCopy(entry.Contribution, localName, localPort,
-            $"Historical catalog source: {entry.Id}, revision {entry.Revision}; original review status: {entry.Status} on {entry.ReviewDate}.");
+            $"Historical catalog source: {entry.Id}, revision {entry.Revision}; original status: {GetConfirmationLabel(entry)} on {entry.ReviewDate}.");
     }
 }

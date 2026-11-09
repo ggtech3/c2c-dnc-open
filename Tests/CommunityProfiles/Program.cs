@@ -128,13 +128,13 @@ internal static class Program
                 var p = CommunityConfiguration.CreateLocalProfile(Fixture," Same local name "," com9 ");
                 That(ids.Add(p.Id) && Guid.TryParse(p.Id,out _) && !p.IsBuiltIn,"Identity reused");
                 That(p.Name == "Same local name" && p.PortName == "COM9" && p.SourceUrl == "" && p.CompatibilityRevision == 0,"Local metadata incorrect");
-                That(p.Guidance.Contains("unreviewed") && p.Guidance.Contains("do not inherit confirmation"),"Missing caution");
+                That(p.Guidance.Contains("Not confirmed") && p.Guidance.Contains("do not inherit confirmation"),"Missing caution");
             }
             That(before == JsonSerializer.Serialize(originals),"Original list changed");
             foreach (var port in new[] { "", "COM0", "COM10000", "COM1;run", "\\\\.\\COM1", "not-a-port" }) Rejects(()=>CommunityConfiguration.CreateLocalProfile(Fixture,"Local",port));
             Rejects(()=>CommunityConfiguration.CreateLocalProfile(Fixture," ","COM1"));
             var preview = CommunityConfiguration.BuildPreview(Fixture);
-            That(preview.Contains("UNREVIEWED USER REPORT") && preview.Contains(Json),"Preview omits full packet or untrusted status");
+            That(preview.StartsWith("Not confirmed\r\n", StringComparison.Ordinal) && preview.Contains(Json),"Preview omits full packet or untrusted status");
         });
         Run("Persistence is save-before-return; failure and invalid candidates leave originals unchanged", () => {
             var original = CncProfile.BuiltIn.ToList();
@@ -169,6 +169,8 @@ internal static class Program
                 Rejects(()=>CommunityConfiguration.SaveNewProfile(CncProfile.BuiltIn,imported,_=>throw new Exception("Injected label reached persistence")));
             }
         });        CatalogTests.Run();
+        SharingTests.Run();
+        DispatchTests.Run();
         return Finish();
     }
 }

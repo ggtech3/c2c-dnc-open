@@ -140,7 +140,7 @@ public static class CommunityConfiguration
     public static string BuildPreview(CommunityContribution contribution)
     {
         Validate(contribution);
-        return "UNREVIEWED USER REPORT\r\nFile claims are not independently confirmed.\r\n\r\n" +
+        return "Not confirmed\r\nFile claims do not establish confirmation.\r\n\r\n" +
             SafetyCaution + "\r\n\r\n" + BuildDetails(contribution);
     }
 
@@ -169,7 +169,7 @@ public static class CommunityConfiguration
         return details + "\r\nEXACT CONTRIBUTION JSON\r\n" + Serialize(contribution);
     }
     public static CncProfile CreateLocalProfile(CommunityContribution contribution, string localName, string localPort)
-        => CreateLocalCopy(contribution, localName, localPort, "Imported from an unreviewed contribution file.");
+        => CreateLocalCopy(contribution, localName, localPort, "Imported from a contribution file. Original status: Not confirmed.");
 
     /// <summary>Save a candidate snapshot before the caller replaces its in-memory list.</summary>
     public static List<CncProfile> SaveNewProfile(IReadOnlyList<CncProfile> existing, CncProfile imported,

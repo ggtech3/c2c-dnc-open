@@ -20,11 +20,11 @@ internal static class CatalogTests
         Checks.Run("Real embedded catalog is empty; synthetic reported/confirmed statuses stay distinct", () => {
             That(CommunityCatalog.LoadEmbedded().Count == 0,"Shipped catalog must not claim synthetic verification");
             var report = CommunityCatalog.Parse(Encode(Report)).Single();
-            That(CommunityCatalog.BuildPreview(report).Contains("not independent confirmation"),"Report status overstated");
+            That(CommunityCatalog.GetConfirmationLabel(report) == "Not confirmed" && CommunityCatalog.BuildPreview(report).StartsWith("Not confirmed\r\n", StringComparison.Ordinal),"Report status overstated");
             var confirmed = Report with { Status = CommunityReviewStatus.IndependentlyConfirmed, Confirmation = Evidence };
             var parsed = CommunityCatalog.Parse(Encode(confirmed)).Single();
             var preview = CommunityCatalog.BuildPreview(parsed);
-            That(preview.Contains("INDEPENDENTLY CONFIRMED ORIGINAL SETUP") && preview.Contains(Evidence.Evidence) && preview.Contains("Independent send: Passed"),"Confirmation evidence missing");
+            That(CommunityCatalog.GetConfirmationLabel(parsed) == "Confirmed" && preview.StartsWith("Confirmed\r\n", StringComparison.Ordinal) && preview.Contains(Evidence.Evidence) && preview.Contains("Independent send: Passed"),"Confirmation evidence missing");
             var copy = CommunityCatalog.CreateLocalProfile(parsed,"Local","COM1");
             That(!copy.IsBuiltIn && copy.Guidance.Contains("do not inherit confirmation") && copy.Guidance.Contains("revision 1"),"Local copy improperly inherits certification");
         });

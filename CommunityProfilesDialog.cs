@@ -51,12 +51,12 @@ public sealed class CommunityProfilesDialog : Form
         local.Controls.Add(new Label { Text = "Local COM port", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft }, 2, 0);
         local.Controls.Add(portBox, 3, 0);
         layout.Controls.Add(local, 0, 3);
-        layout.Controls.Add(new Label { Dock = DockStyle.Fill, Text = "Adding never replaces an existing profile. Choose your own COM1-COM9999.\r\nProvenance describes the original contribution only; edited local copies are not verified." }, 0, 4);
+        layout.Controls.Add(new Label { Dock = DockStyle.Fill, Text = "Adding never replaces an existing profile. Choose your own COM1-COM9999.\r\nProvenance describes the original contribution only; edited local copies do not inherit confirmation." }, 0, 4);
         var buttons = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.RightToLeft, Padding = new Padding(0, 6, 0, 0) };
         addButton.Click += (_, _) => AddProfile();
         var cancel = new Button { Text = "Cancel", AutoSize = true, DialogResult = DialogResult.Cancel };
         var help = new Button { Text = "How to contribute", AutoSize = true };
-        help.Click += (_, _) => MessageBox.Show(this, "Select a local profile and choose Share setup in the main window. Enter public controller, machine, wiring and test details, review all fields, then save the contribution file.\r\n\r\nContact the maintainer through an already-established private channel to arrange manual review. Do not send customer programs, machine serial numbers or other private data. There is no public intake or automatic upload. Maintainer review is distinct from independent machine confirmation.", "How to contribute", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        help.Click += (_, _) => MessageBox.Show(this, "Select a profile in the main window and choose Share. Enter a machine/controller description and optional notes, then review the exact post. Copy and open GitHub copies it and opens the project page; sign in if needed, paste into the issue body and click Submit yourself. Nothing is posted automatically.\r\n\r\nThe ggtech3/c2c-dnc-open repository is currently private, so you need access. You can also save a JSON copy. Remove customer details and other private information before sharing.\r\n\r\nConfirmed applies only to the original setup and operations with independent test evidence. Not confirmed includes files and reports without that evidence. Always check your own setup.", "How to share a profile", MessageBoxButtons.OK, MessageBoxIcon.Information);
         buttons.Controls.Add(addButton);
         buttons.Controls.Add(cancel);
         buttons.Controls.Add(help);
@@ -77,14 +77,14 @@ public sealed class CommunityProfilesDialog : Form
             if (entries.Count > 0) catalogBox.SelectedIndex = 0;
             else
             {
-                catalogBox.Items.Add("Reviewed catalog: no entries yet");
+                catalogBox.Items.Add("Community catalog: no entries yet");
                 catalogBox.SelectedIndex = 0;
-                preview.Text = "NO REVIEWED COMMUNITY CONFIGURATIONS YET\r\n\r\nThe catalog is intentionally empty until real contributions and evidence have been reviewed. The 18 built-in starting profiles are unchanged and are not newly certified.\r\n\r\nYou can import a contribution file for review. External files are always unreviewed user reports, regardless of claims in their text.\r\n\r\nChoose How to contribute for the private manual review process.";
+                preview.Text = "NO COMMUNITY CONFIGURATIONS YET\r\n\r\nThe catalog is intentionally empty until real contributions and evidence have been reviewed. The 18 built-in starting profiles are unchanged and are not newly certified.\r\n\r\nYou can import a contribution file for review. External files are always Not confirmed, regardless of claims in their text.\r\n\r\nChoose How to contribute for the simple GitHub sharing steps.";
             }
         }
         catch (Exception ex) when (ex is FormatException or IOException or InvalidOperationException)
         {
-            preview.Text = "The bundled catalog could not be loaded. No catalog configuration can be added.\r\n\r\n" + ex.Message + "\r\n\r\nYou may still import a contribution file for unreviewed preview.";
+            preview.Text = "The bundled catalog could not be loaded. No catalog configuration can be added.\r\n\r\n" + ex.Message + "\r\n\r\nYou may still import a contribution file for a Not confirmed preview.";
         }
     }
 
@@ -103,7 +103,7 @@ public sealed class CommunityProfilesDialog : Form
 
     private void ImportFile()
     {
-        using var file = new OpenFileDialog { Title = "Open an unreviewed contribution", Filter = "Community configuration (*.json)|*.json|All files (*.*)|*.*", CheckFileExists = true, Multiselect = false };
+        using var file = new OpenFileDialog { Title = "Open a shared profile", Filter = "Community configuration (*.json)|*.json|All files (*.*)|*.*", CheckFileExists = true, Multiselect = false };
         if (file.ShowDialog(this) != DialogResult.OK) return;
         // Clear prior selection before parsing, so a rejected file cannot leave Add pointing at an older source.
         catalogBox.SelectedIndex = -1;
@@ -115,7 +115,7 @@ public sealed class CommunityProfilesDialog : Form
         try
         {
             CommunityContribution parsed = CommunityConfiguration.ReadFile(file.FileName);
-            preview.Text = "SOURCE: EXTERNAL FILE - UNREVIEWED USER REPORT\r\nClaims in the file do not establish maintainer review or independent confirmation.\r\n\r\n" + CommunityConfiguration.BuildPreview(parsed);
+            preview.Text = "SOURCE: EXTERNAL FILE - Not confirmed\r\nClaims in the file do not establish maintainer review or independent confirmation.\r\n\r\n" + CommunityConfiguration.BuildPreview(parsed);
             contribution = parsed;
             addButton.Enabled = true;
         }
@@ -148,6 +148,6 @@ public sealed class CommunityProfilesDialog : Form
     private sealed record CatalogChoice(CommunityCatalogEntry Entry)
     {
         public override string ToString() => Entry.Contribution.Title + (Entry.Status == CommunityReviewStatus.IndependentlyConfirmed
-            ? " - Independently confirmed" : " - Maintainer-reviewed user report");
+            ? " - Confirmed" : " - Not confirmed");
     }
 }
