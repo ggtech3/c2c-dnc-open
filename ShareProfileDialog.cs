@@ -62,14 +62,19 @@ public sealed class ShareProfileDialog : Form
         {
             CommunityContribution contribution = CommunitySharing.CreateQuickContribution(profile,
                 descriptionBox.Text.Trim(), notesBox.Text.Trim(), Application.ProductVersion);
-            string post = CommunitySharing.BuildGitHubPost(contribution);
+            string post = CommunitySharing.BuildGitHubPost(contribution).ReplaceLineEndings("\r\n");
             using var review = new Form { Text = "Review your GitHub post", StartPosition = FormStartPosition.CenterParent, Size = new Size(820, 760), MinimumSize = new Size(740, 620), ShowInTaskbar = false, MinimizeBox = false, Font = Font };
             var layout = new TableLayoutPanel { Dock = DockStyle.Fill, Padding = new Padding(16), ColumnCount = 1, RowCount = 4 };
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 64));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 46));
-            layout.Controls.Add(new Label { Dock = DockStyle.Fill, AutoSize = true, Margin = new Padding(3, 3, 3, 12), Text = "Recipient: ggtech3/c2c-dnc-open on GitHub (currently private). You need repository access and may need to sign in.\r\n\r\nCheck the exact post below. Your local profile name, COM port, guidance, programs and logs are excluded. Remove private details from your description and notes.\r\n\r\nCopying replaces your clipboard; clipboard history or sync may retain this text. GitHub opens without your data. You must paste into the issue body and click Submit yourself." }, 0, 0);
+            var privacy = new Label { Dock = DockStyle.Top, AutoSize = true, Margin = new Padding(3, 3, 3, 12), Text = "Recipient: ggtech3/c2c-dnc-open on GitHub (currently private). You need repository access and may need to sign in.\r\n\r\nCheck the exact post below. Your local profile name, COM port, guidance, programs and logs are excluded. Remove private details from your description and notes.\r\n\r\nCopying replaces your clipboard; clipboard history or sync may retain this text. GitHub opens without your data. You must paste into the issue body and click Submit yourself." };
+            void ConstrainPrivacyWidth() => privacy.MaximumSize = new Size(
+                Math.Max(1, layout.ClientSize.Width - layout.Padding.Horizontal - privacy.Margin.Horizontal), 0);
+            layout.SizeChanged += (_, _) => ConstrainPrivacyWidth();
+            layout.Controls.Add(privacy, 0, 0);
             layout.Controls.Add(new TextBox { Dock = DockStyle.Fill, ReadOnly = true, Multiline = true, ScrollBars = ScrollBars.Vertical, WordWrap = true, Text = post, AccessibleName = "Exact GitHub post" }, 0, 1);
             var status = new Label { Dock = DockStyle.Fill, Text = "Nothing has been copied, opened or submitted." };
             layout.Controls.Add(status, 0, 2);

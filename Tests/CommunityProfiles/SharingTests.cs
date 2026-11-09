@@ -58,6 +58,18 @@ internal static class SharingTests
             That(Quick("  Public description  ").Title=="Public description","Description trimming mismatch");
             Rejects(()=>CommunitySharing.CreateQuickContribution(CncProfile.BuiltIn[0],"Synthetic",null,""));
         });
+        Checks.Run("Windows preview line endings preserve exact reviewed payload and fenced JSON",()=>{
+            const string notes="First\r\nSecond\nThird\rFourth\u2028Fifth\u2029``` @mention <b>text</b>";
+            var contribution=Quick(notes:notes);
+            string canonical=CommunitySharing.BuildGitHubPost(contribution);
+            string displayed=canonical.ReplaceLineEndings("\r\n");
+            That(!displayed.Replace("\r\n","").Contains('\n'),"Bare LF remains in Windows preview");
+            string? copied=null;
+            var dispatch=new ShareDispatch(text=>copied=text,()=>{});
+            That(dispatch.TryCopyAndOpen(displayed)==ShareDispatchResult.CopiedAndOpened && copied==displayed,"Copied post differs from displayed normalized post");
+            var parsed=CommunityConfiguration.Parse(ExtractJson(displayed.ReplaceLineEndings("\n")));
+            That(parsed==contribution && parsed.Context.Limitations==notes,"Line normalization changed user JSON data");
+        });
         Checks.Run("Markdown/HTML/mention/URL/Unicode input remains exact inert fenced JSON",()=>{
             foreach(var payload in new[] {"```\n@everyone\n<script>alert(1)</script>\n```",new string('`',100)+"\n# forged status", "~~~json\n[click](https://example.invalid/) ![image](https://example.invalid/x)","@some-user <https://example.invalid/> & <b>Confirmed</b>","Café 日本語 😀 \u2028 notes \u2029 text","\\\"} , \\\"verified\\\": true"}) {
                 var c=Quick("Public `description`",payload);

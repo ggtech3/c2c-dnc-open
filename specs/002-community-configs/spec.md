@@ -11,6 +11,7 @@ Select a profile, choose Share, enter one public machine/controller description 
 - Application version is automatic; details not entered are explicitly unprovided, results NotTested and date empty. Prose cannot infer test results or confirmation.
 - Preview identifies private ggtech3/c2c-dnc-open as destination and discloses GitHub sign-in/repository access requirements, manual posting, and local clipboard/history exposure.
 - Explicit Copy and open GitHub copies the exact reviewed post, then opens a fixed HTTPS issue URL containing no user data. User pastes/submits. No automatic post/upload. Secondary local JSON save remains available.
+- Review text must wrap and primary actions remain visible at default and minimum window sizes.
 - Clipboard failure prevents browser launch. Browser failure clearly says text was copied and supports retry. Cancel/Back has no sharing effect. Repeated clicks cannot queue duplicate launches.
 - Only selected portable settings and deliberately entered text are shared. COM assignment, local identity/name, guidance/source URL, programs, logs, paths and other profiles are excluded. Entered notes remain inert serialized JSON text, not active Markdown.
 Independent test: minimal synthetic submission round-trips settings, exclusions, fixed URL, cancellation and action failures without real clipboard/browser use.

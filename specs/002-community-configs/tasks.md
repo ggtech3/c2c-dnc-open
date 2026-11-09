@@ -30,7 +30,7 @@
 
 Dependencies: T001-T002 before implementation. T003 core API precedes UI/tests; T004/T007 may run independently. T005-T012 integrate before T013-T016. Parallel workers own disjoint files. No task authorizes push/merge/public release or hardware operations.
 
-T015 remains partially complete: initial empty catalog/cancel and fresh fields observed; full GUI matrix interrupted. See verification.md for exact passed, failed and unrun stages. No implementation gap found in final convergence; no duplicate convergence task appended for this existing open validation item.
+T015 remains partially complete: current light/dark forms, required validation, default-size wrapping/actions, private-field exclusion, Back/edit, simulated share/repeat and Cancel were observed; full GUI matrix remains unrun. See verification.md for exact passed, failed and unrun stages. No implementation gap found in final convergence; no duplicate convergence task appended for this existing open validation item.
 
 ## Phase 7: User-requested simplification (2026-11-09)
 Prior completed tasks describe the first iteration at 008ae8e; the following tasks reconcile the latest scope before delivery.
@@ -43,3 +43,6 @@ Prior completed tasks describe the first iteration at 008ae8e; the following tas
 - [x] T023 Independently review final source and reconcile all revised acceptance requirements in specs/002-community-configs/verification.md; record manual GUI gap, no push/publication and rollback.
 
 Dependencies: T017 before T018-T021. T018 API precedes T019 integration; T020 can run alongside UI in disjoint source files. T021 is parallel documentation. T022/T023 follow integrated source. Existing T015 remains the manual GUI matrix; do not duplicate or mark passed without observations.
+
+## Visible review correction
+- [x] T024 [US1] Correct ShareProfileDialog.cs review layout after visible QA found unconstrained AutoSize text expanding the single column; preserve readable wrapping and visible primary actions at default/minimum size, rerun synthetic/hidden tests and record bounded visible retest in verification.md. Default-size light/dark retest passed; minimum-size/DPI matrix remains explicitly open under T015.
