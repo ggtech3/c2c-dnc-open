@@ -191,6 +191,14 @@ and [Siemens SINUMERIK 802D sl Instruction Manual](https://support.industry.siem
 Only one application can open a COM port at a time. Close terminal programs or
 other DNC software before starting an operation.
 
+## Community configurations
+
+Select one profile and choose **Share**. Enter a public machine/controller description and optional notes, review the exact post, then choose **Copy and open GitHub**. Sign in if needed, paste into the issue description with **Ctrl+V**, and click **Submit new issue**. No file handling or Git installation is needed; an optional **Save JSON copy** remains available. GitHub requires an account and existing access to this private repository.
+
+Use **Community configurations** to preview a shared JSON file or bundled entry and add a new custom copy with your own COM port. All 18 originals remain available; imports never replace them. Status is **Confirmed** or **Not confirmed**. Confirmation covers only the original setup and supported tested operations, not every machine or edited local copy. The initial community catalog is empty. The app never posts or uploads automatically.
+
+See [sharing, importing and review instructions](docs/COMMUNITY-CONFIGURATIONS.md). The repository remains private; no public contribution program or website change is included.
+
 ## Hardware note
 
 StarTech.com USB-to-RS-232 adapters are recommended as a starting point. The

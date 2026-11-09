@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\community-configurations.json" LogicalName="C2CDnc.CommunityConfigurations.json" />
     <EmbeddedResource Include="Assets\C2CDnc-logo-dark.png" LogicalName="C2CDnc.LogoDark.png" />
     <EmbeddedResource Include="Assets\C2CDnc-logo-light.png" LogicalName="C2CDnc.LogoLight.png" />
   </ItemGroup>

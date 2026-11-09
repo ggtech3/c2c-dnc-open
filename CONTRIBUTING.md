@@ -9,6 +9,7 @@ Use Windows x64, Git, PowerShell 7 (pwsh) and the .NET 10 SDK. Clone this reposi
 ~~~powershell
 dotnet restore .\WindowsDnc.csproj --locked-mode
 dotnet build .\WindowsDnc.csproj -c Release --no-restore
+pwsh -File .\Tests\CommunityProfiles\Run.ps1
 pwsh -File .\Tests\SerialSimulation\Run.ps1
 pwsh -File .\tools\Check-SourceHygiene.ps1
 pwsh -File .\build.ps1
@@ -33,3 +34,7 @@ Do not change serial behavior or default profiles incidentally. Cancellation, in
 Write clear code, match nearby style, explain non-obvious tradeoffs and preserve unrelated changes. Be respectful and specific in review. Do not post security details in ordinary issues; follow SECURITY.md. Maintainers may defer changes that expand scope or lack evidence.
 
 Do not add code or assets you lack rights to contribute. Project licensing and any contributor terms must be decided by the owner before outside contributions are accepted. No CLA, DCO or copyright assignment is imposed by this document.
+
+## Configuration contributions
+
+Use **Share**, review the sanitized post, then **Copy and open GitHub**, paste and submit. No file attachment, branch or pull request is required for a profile report. Existing private-repository access is required. See the [private review procedure](docs/COMMUNITY-CONFIGURATIONS.md). Do not submit raw runtime profiles, programs or logs. Reports start **Not confirmed**; text claims alone never award **Confirmed**. Public intake and redistribution terms remain separate owner decisions.

@@ -59,6 +59,8 @@ public sealed class MainForm : Form
     private readonly ColumnStyle outlineColumnStyle = new(SizeType.Absolute, 300);
     private readonly CheckBox darkModeToggle = new();
     private readonly Button profileVisibilityButton = new();
+    private readonly Button shareProfileButton = new();
+    private readonly Button communityProfilesButton = new();
     private readonly Button aboutButton = new();
     private readonly Label editionStatusLabel = new();
     private readonly Panel tabStripPanel = new();
@@ -306,7 +308,7 @@ public sealed class MainForm : Form
             Dock = DockStyle.Right,
             Width = 365,
             FlowDirection = FlowDirection.LeftToRight,
-            Padding = new Padding(4, 7, 0, 0)
+            Padding = new Padding(4, 0, 0, 0)
         };
         ConfigureGroupedButton(profileVisibilityButton, "Shown profiles…", "profile");
         profileVisibilityButton.AutoSize = true;
@@ -323,6 +325,17 @@ public sealed class MainForm : Form
         themePanel.Controls.Add(aboutButton);
         themePanel.Controls.Add(profileVisibilityButton);
         themePanel.Controls.Add(darkModeToggle);
+        ConfigureGroupedButton(shareProfileButton, "Share", "profile");
+        shareProfileButton.AutoSize = true;
+        shareProfileButton.Height = 28;
+        shareProfileButton.Click += (_, _) => ShareSelectedProfile();
+        ConfigureGroupedButton(communityProfilesButton, "Community configurations…", "profile");
+        communityProfilesButton.AutoSize = true;
+        communityProfilesButton.Height = 28;
+        communityProfilesButton.Click += (_, _) => BrowseCommunityProfiles();
+        themePanel.SetFlowBreak(darkModeToggle, true);
+        themePanel.Controls.Add(shareProfileButton);
+        themePanel.Controls.Add(communityProfilesButton);
         headingPanel.Controls.Add(themePanel);
         root.Controls.Add(headingPanel, 0, 0);
 
@@ -858,6 +871,7 @@ public sealed class MainForm : Form
 
     private void ProfileChanged()
     {
+        shareProfileButton.Enabled = operationCancellation is null && SelectedProfile is not null;
         if (profileBox.SelectedItem is not CncProfile profile)
         {
             return;
@@ -1131,6 +1145,8 @@ public sealed class MainForm : Form
         addProfileButton.Enabled = !busy;
         deleteProfileButton.Enabled = !busy && SelectedProfile is { IsBuiltIn: false };
         profileVisibilityButton.Enabled = !busy;
+        shareProfileButton.Enabled = !busy && SelectedProfile is not null;
+        communityProfilesButton.Enabled = !busy;
         browseButton.Enabled = !busy;
         recentFilesBox.Enabled = !busy;
         documentTabs.Enabled = !busy;
@@ -1829,6 +1845,33 @@ public sealed class MainForm : Form
         {
             profiles[index] = dialog.Result;
             SaveAndReloadProfiles(dialog.Result.Id);
+        }
+    }
+
+    private void ShareSelectedProfile()
+    {
+        if (operationCancellation is not null || SelectedProfile is not CncProfile selected) return;
+        using var dialog = new ShareProfileDialog(selected, darkMode);
+        dialog.ShowDialog(this);
+    }
+
+    private void BrowseCommunityProfiles()
+    {
+        if (operationCancellation is not null) return;
+        using var dialog = new CommunityProfilesDialog(profiles, darkMode);
+        if (dialog.ShowDialog(this) != DialogResult.OK || dialog.Result is not CncProfile imported) return;
+        try
+        {
+            // Persist a separate candidate list first. Failed writes leave all existing objects,
+            // in-memory membership and hidden-profile preferences untouched.
+            List<CncProfile> candidate = CommunityConfiguration.SaveNewProfile(profiles, imported, profileRepository.Save);
+            profiles = candidate;
+            RebindProfiles(imported.Id);
+            statusLabel.Text = "Community configuration added as a new local copy. Verify the setup before use.";
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or FormatException)
+        {
+            MessageBox.Show(this, "No profile was added. " + ex.Message, "Could not save imported profile", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
