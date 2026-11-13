@@ -268,18 +268,18 @@ public sealed class MainForm : Form
             Padding = new Padding(22),
             BackColor = Background
         };
-        root.RowStyles.Add(new RowStyle(SizeType.Absolute, 76));
+        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 88));
         root.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 178));
         Controls.Add(root);
 
-        var headingPanel = new Panel { Dock = DockStyle.Fill };
+        var brandingPanel = new Panel { Size = new Size(330, 76), MinimumSize = new Size(330, 76) };
         logoBox.Location = new Point(0, 2);
         logoBox.Size = new Size(48, 48);
         logoBox.SizeMode = PictureBoxSizeMode.Zoom;
-        headingPanel.Controls.Add(logoBox);
-        headingPanel.Controls.Add(new Label
+        brandingPanel.Controls.Add(logoBox);
+        brandingPanel.Controls.Add(new Label
         {
             Text = "C2C DNC",
             Font = new Font("Segoe UI Semibold", 20F),
@@ -287,7 +287,7 @@ public sealed class MainForm : Form
             AutoSize = true,
             Location = new Point(58, 2)
         });
-        headingPanel.Controls.Add(new Label
+        brandingPanel.Controls.Add(new Label
         {
             Text = "RS-232 program sender / receiver",
             Font = new Font("Segoe UI", 9.5F),
@@ -297,19 +297,12 @@ public sealed class MainForm : Form
             Location = new Point(60, 38)
         });
         editionStatusLabel.Location = new Point(60, 55);
-        editionStatusLabel.Size = new Size(650, 18);
+        editionStatusLabel.Size = new Size(270, 18);
         editionStatusLabel.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
         editionStatusLabel.AutoEllipsis = true;
         editionStatusLabel.Font = new Font("Segoe UI Semibold", 8.5F);
         editionStatusLabel.Tag = "muted";
-        headingPanel.Controls.Add(editionStatusLabel);
-        var themePanel = new FlowLayoutPanel
-        {
-            Dock = DockStyle.Right,
-            Width = 365,
-            FlowDirection = FlowDirection.LeftToRight,
-            Padding = new Padding(4, 0, 0, 0)
-        };
+        brandingPanel.Controls.Add(editionStatusLabel);
         ConfigureGroupedButton(profileVisibilityButton, "Shown profiles…", "profile");
         profileVisibilityButton.AutoSize = true;
         profileVisibilityButton.Height = 30;
@@ -322,21 +315,16 @@ public sealed class MainForm : Form
         darkModeToggle.AutoSize = true;
         darkModeToggle.Margin = new Padding(10, 7, 0, 0);
         darkModeToggle.CheckedChanged += (_, _) => ToggleDarkMode(darkModeToggle.Checked);
-        themePanel.Controls.Add(aboutButton);
-        themePanel.Controls.Add(profileVisibilityButton);
-        themePanel.Controls.Add(darkModeToggle);
         ConfigureGroupedButton(shareProfileButton, "Share", "profile");
         shareProfileButton.AutoSize = true;
-        shareProfileButton.Height = 28;
+        shareProfileButton.Height = 30;
         shareProfileButton.Click += (_, _) => ShareSelectedProfile();
         ConfigureGroupedButton(communityProfilesButton, "Community configurations…", "profile");
         communityProfilesButton.AutoSize = true;
-        communityProfilesButton.Height = 28;
+        communityProfilesButton.Height = 30;
         communityProfilesButton.Click += (_, _) => BrowseCommunityProfiles();
-        themePanel.SetFlowBreak(darkModeToggle, true);
-        themePanel.Controls.Add(shareProfileButton);
-        themePanel.Controls.Add(communityProfilesButton);
-        headingPanel.Controls.Add(themePanel);
+        var headingPanel = new HeaderLayoutPanel(brandingPanel,
+            [aboutButton, profileVisibilityButton, darkModeToggle, shareProfileButton, communityProfilesButton]);
         root.Controls.Add(headingPanel, 0, 0);
 
         var profileCard = CreateCard();

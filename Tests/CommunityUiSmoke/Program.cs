@@ -8,6 +8,7 @@ internal static class Program
     private static void Main(string[] args)
     {
         ApplicationConfiguration.Initialize();
+        if (args.Contains("--check-header")) { HeaderLayoutChecks.Run(args); return; }
         if (args.Contains("--check-controls")) { CheckControls(); return; }
         var profiles = CncProfile.BuiltIn.ToList();
         using var launcher = new Form
