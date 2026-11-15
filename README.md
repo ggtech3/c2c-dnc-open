@@ -2,7 +2,7 @@
 
 ## Repository status and development
 
-C2C-owned source and starter profiles are licensed under the [MIT License](LICENSE). This branch prepares the public release; repository visibility and release availability are verified separately before publication. Read [licensing status](LICENSE-STATUS.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md), [governance](GOVERNANCE.md) and the [Spec Kit workflow](docs/SPEC-KIT.md).
+C2C-owned source and starter profiles are licensed under the [MIT License](LICENSE). Read [licensing status](LICENSE-STATUS.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md), [governance](GOVERNANCE.md) and the [Spec Kit workflow](docs/SPEC-KIT.md).
 
 The source history starts fresh from a sanitized preview snapshot. Private licensing tools, prior commercial Git history, customer data, runtime state and packaged binaries are excluded. Automated serial checks use a fake endpoint; see [simulation limits](Tests/SerialSimulation/README.md). A passing build or simulation is not machine acceptance.
 
@@ -15,13 +15,15 @@ Existing trial/paid releases and their data are not changed.
 
 ## Get started with profiles
 
-A fresh installation starts with no machine profiles. Fifteen former presets
+No machine is configured or selected on first launch. Use **Choose verified setup (3 available)** to open the built-in, offline verified list. Review a setup and choose your own local name and COM port before adding it. No internet or GitHub account is needed for those three setups.
+
+Fifteen former presets
 are now downloadable **unverified starting points**, not bundled defaults, in
 [profiles/starters](profiles/starters). Their settings are not newly validated
 by this move. Match every setting to your own controller, adapter and cable.
 
-Once the repository is public, anyone can download its files and available
-release ZIPs without a GitHub account. Open a starter JSON file on GitHub and
+Files and available release ZIPs from the public repository can be downloaded
+without a GitHub account. Open a starter JSON file on GitHub and
 use **Download raw file**. In the app choose **Community configurations**,
 import the file, review the settings, and enter your own local name and COM
 port before choosing **Add profile**. No account, Git installation or online
@@ -180,7 +182,7 @@ Select one profile and choose **Share**. Enter a public machine/controller descr
 
 Use **Community configurations** to preview a shared JSON file or bundled entry and add a new custom copy with your own COM port. The 15 unverified starter files live in the repository rather than the installed app; imports never replace existing profiles. Status distinguishes owner-reported tested setups from independently confirmed evidence; external files remain **Not confirmed**. Confirmation covers only the original setup and supported tested operations, not every machine or edited local copy. Three user-reported tested profiles are available for explicit review and addition; none are installed or selected automatically. The app never posts or uploads automatically.
 
-See [sharing, importing and review instructions](docs/COMMUNITY-CONFIGURATIONS.md). Publication is a separate release step; these instructions do not establish that a downloadable release is already live.
+See [sharing, importing and review instructions](docs/COMMUNITY-CONFIGURATIONS.md).
 
 ## Hardware note
 
