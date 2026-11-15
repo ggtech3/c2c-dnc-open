@@ -1,16 +1,14 @@
 # Share one CNC profile
 
 Fifteen former defaults are repository-only **unverified starter files** in
-[`profiles/starters`](../profiles/starters). A fresh app starts with no profiles;
-existing saved profiles and imports are retained. Three setup-specific catalog
+[`profiles/starters`](../profiles/starters). No machine is configured or selected on first launch. Use **Choose verified setup (3 available)** to open the built-in offline list; no internet or GitHub account is required. Existing saved profiles and imports are retained. Three setup-specific catalog
 profiles (EMCO/Siemens 810T, Yasnac MX-3 and Haas Classic) are available as
 **user-reported tested**, not independently confirmed. None is installed or
-selected automatically; review the settings and choose a local COM port first. This branch
-prepares public use; publication and release availability are checked separately.
+selected automatically; review the settings and choose a local COM port first.
 
 ## Download without an account
 
-Once the repository is public, open a starter JSON file on GitHub and choose
+Open a starter JSON file in the public repository on GitHub and choose
 **Download raw file**. No GitHub account is needed to download public files or
 release ZIPs. Choose **Community configurations** in the app, import the JSON,
 review it, and enter your own name and COM port before choosing **Add profile**.

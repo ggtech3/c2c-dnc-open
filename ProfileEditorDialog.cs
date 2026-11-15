@@ -185,11 +185,14 @@ public sealed class ProfileEditorDialog : Form
         parityReplaceBox.Value = Math.Clamp(profile.ParityReplaceCharacter, 0, 127);
     }
 
+    private static bool HasRequiredIdentity(string name, string port) =>
+        !string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(port);
+
     private void SaveAndClose()
     {
         string name = nameBox.Text.Trim();
         string port = portBox.Text.Trim().ToUpperInvariant();
-        if (name.Length == 0 || port.Length == 0)
+        if (!HasRequiredIdentity(name, port))
         {
             MessageBox.Show(this, "Profile name and COM port are required.", Text,
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);

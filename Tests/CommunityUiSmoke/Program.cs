@@ -74,6 +74,17 @@ internal static class Program
             }
             foreach (bool dark in new[] { false, true })
             {
+                using (var blankEditor = new ProfileEditorDialog(CncProfile.NewBlank(), true, dark))
+                using (var cloneEditor = new ProfileEditorDialog(ProfileFixtures.Baseline[0] with { PortName = "COM987" }, true, dark))
+                {
+                    var portField = typeof(ProfileEditorDialog).GetField("portBox", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+                    Require(((TextBox)portField.GetValue(blankEditor)!).Text == "", "Manual blank profile assumed a COM port");
+                    Require(((TextBox)portField.GetValue(cloneEditor)!).Text == "COM987", "Intentional clone lost configured COM port");
+                    Require(blankEditor.Result.PortName == "", "Blank profile silently assigned a COM port");
+                    var guard = typeof(ProfileEditorDialog).GetMethod("HasRequiredIdentity", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)!;
+                    Require(!(bool)guard.Invoke(null, new object[] { "New machine", "" })! && !(bool)guard.Invoke(null, new object[] { "New machine", "   " })!, "Save accepts an omitted COM port");
+                    Require((bool)guard.Invoke(null, new object[] { "New machine", "COM987" })!, "Explicit port rejected");
+                }
                 int copies=0,opens=0;
                 using (var share = new ShareProfileDialog(ProfileFixtures.Baseline[0] with { Name="PRIVATE", Guidance="PRIVATE" },dark,_=>copies++,()=>opens++))
                 {

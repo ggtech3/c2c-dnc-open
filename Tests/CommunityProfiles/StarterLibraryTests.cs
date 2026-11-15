@@ -7,7 +7,7 @@ internal static class StarterLibraryTests
   Checks.Run("Fresh installation has no machine profile and does not create storage",()=>{
    string path=Path.Combine(Path.GetTempPath(),Guid.NewGuid()+"-profiles.json");
    That(CncProfile.BuiltIn.Count==0 && new ProfileRepository(path).Load().Count==0 && !File.Exists(path),"Fresh install must remain unconfigured");
-   var blank=CncProfile.NewBlank(); That(!blank.IsBuiltIn && blank.Guidance.Contains("Not confirmed"),"Blank editor is not verified");
+   var blank=CncProfile.NewBlank(); That(!blank.IsBuiltIn && blank.Guidance.Contains("Not confirmed") && blank.PortName == "", "Blank editor must be unverified with no assumed port");
   });
   Checks.Run("Legacy defaults and user-imported profiles preserve all settings on load and save",()=>{
    string path=Path.Combine(Path.GetTempPath(),Guid.NewGuid()+"-profiles.json");

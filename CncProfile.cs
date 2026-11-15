@@ -33,7 +33,7 @@ public sealed record CncProfile(
     public static IReadOnlyList<CncProfile> BuiltIn { get; } = Array.Empty<CncProfile>();
 
     public static CncProfile NewBlank() => new(
-        Guid.NewGuid().ToString("N"), false, "New profile - Not confirmed", "COM1",
+        Guid.NewGuid().ToString("N"), false, "New profile - Not confirmed", "",
         9600, 8, Parity.None, StopBits.One, Handshake.None,
         false, false, "\r\n", 0, false, 5, true, false, false,
         "Not confirmed. Configure every setting for your own controller, cable and adapter before use.");

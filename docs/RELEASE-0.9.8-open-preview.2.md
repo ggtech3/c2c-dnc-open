@@ -4,6 +4,7 @@
 - Three offline, owner-reported verified setups: EMCO ET342 / Siemens 810T, Yasnac MX-3 and Haas Classic Control. Verification describes the original setup, not independent confirmation or universal compatibility.
 - Fresh startup has no installed/active machine or assumed COM port. A visible Choose verified setup action opens the three available profiles. Review, enter local name and port, then Add. Nothing connects or transfers during import.
 - Fifteen unverified starters moved to the public repository's profiles/starters directory. Downloading and importing requires no GitHub account; posting a contribution on GitHub does.
+- Manual Add profile with no selected machine starts with a blank COM port; saving requires an explicit port. Intentionally copying a selected configured profile preserves its COM setting.
 - Existing saved profiles (including edited old built-ins) stay intact as local profiles. Their settings are not reset. No other C2C edition's store is read.
 - Preserves the reviewed one-row header. MIT license for C2C-owned code/profiles, with component terms and notices included.
 
