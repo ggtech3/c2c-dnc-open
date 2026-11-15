@@ -10,7 +10,7 @@ internal static class Program
         ApplicationConfiguration.Initialize();
         if (args.Contains("--check-header")) { HeaderLayoutChecks.Run(args); return; }
         if (args.Contains("--check-controls")) { CheckControls(); return; }
-        var profiles = CncProfile.BuiltIn.ToList();
+        var profiles = ProfileFixtures.Baseline.ToList();
         using var launcher = new Form
         {
             Text = "Community UI smoke harness - synthetic / no profile storage",
@@ -62,10 +62,20 @@ internal static class Program
         }
         try
         {
+            string temporary = Path.Combine(Path.GetTempPath(), "dnc-ui-" + Guid.NewGuid().ToString("N"));
+            // Isolated runtime paths; do not enumerate or open serial ports.
+            using (var empty = new MainForm(temporary, enumeratePorts: false))
+            {
+                Require(!empty.Visible, "Main form unexpectedly shown");
+                var controls = Descendants(empty).ToArray();
+                Require(controls.OfType<Button>().Any(b => b.AccessibleName == "Choose an offline verified setup"), "No first-run catalog action");
+                Require(controls.OfType<ComboBox>().Where(b => b.DropDownStyle == ComboBoxStyle.DropDownList && b.DropDownWidth == 440).Single().SelectedIndex == -1, "Fresh machine automatically selected");
+                Require(controls.OfType<Button>().Where(b => b.Text is "Send program" or "Receive").All(b => !b.Enabled), "Transfer enabled without profile");
+            }
             foreach (bool dark in new[] { false, true })
             {
                 int copies=0,opens=0;
-                using (var share = new ShareProfileDialog(CncProfile.BuiltIn[0] with { Name="PRIVATE", Guidance="PRIVATE" },dark,_=>copies++,()=>opens++))
+                using (var share = new ShareProfileDialog(ProfileFixtures.Baseline[0] with { Name="PRIVATE", Guidance="PRIVATE" },dark,_=>copies++,()=>opens++))
                 {
                     var boxes=Descendants(share).OfType<TextBox>().Where(x=>!x.ReadOnly).ToArray();
                     Require(boxes.Length==2 && boxes.All(x=>x.Text==""),"Sharing must have only two initially blank inputs");
@@ -76,12 +86,17 @@ internal static class Program
                     share.Close();
                 }
                 Require(copies==0 && opens==0,"Closing/canceling invoked sharing callbacks");
-                using var browse=new CommunityProfilesDialog(CncProfile.BuiltIn,dark);
+                using var browse=new CommunityProfilesDialog(ProfileFixtures.Baseline,dark);
                 Require(!browse.Visible && browse.Result is null,"Construction imported a profile");
-                Require(Descendants(browse).OfType<Button>().Single(b=>b.Text=="Add profile").Enabled==false,"Empty catalog enables Add");
-                Require(Descendants(browse).OfType<TextBox>().Any(b=>b.Text.Contains("Not confirmed")),"Empty catalog trust caution missing");
+                var catalog=Descendants(browse).OfType<ComboBox>().Single();
+                Require(catalog.Items.Count==3 && catalog.SelectedIndex==-1,"Three offline profiles must be available without initial selection");
+                Require(Descendants(browse).OfType<Button>().Single(b=>b.Text=="Add profile").Enabled==false,"Unselected catalog enables Add");
+                Require(Descendants(browse).OfType<TextBox>().Any(b=>b.Text.Contains("Not confirmed")),"Unselected catalog trust caution missing");
+                catalog.SelectedIndex=0;
+                Require(Descendants(browse).OfType<TextBox>().Where(b=>!b.ReadOnly).All(b=>b.Text==""),"Catalog selection assigned a local name/port");
+                Require(browse.Result is null && Descendants(browse).OfType<TextBox>().Any(b=>b.Text.Contains("User verified - original setup only")),"Preview changed trust or imported silently");
             }
-            Console.WriteLine("PASS hidden light/dark control construction, fresh fields, cancellation and empty catalog; no desktop or sharing side effects.");
+            Console.WriteLine("PASS hidden light/dark control construction, fresh fields, cancellation and unselected verified catalog; no desktop or sharing side effects.");
         }
         catch(Exception ex)
         {

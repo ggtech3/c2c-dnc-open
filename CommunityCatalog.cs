@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace WindowsDnc;
 
-public enum CommunityReviewStatus { UserReported, IndependentlyConfirmed }
+public enum CommunityReviewStatus { UserReported, IndependentlyConfirmed, UserVerified }
 public sealed record CommunityConfirmation(string Tester, string TestDate, string Evidence,
     string SendResult, string ReceiveResult, string DripFeedResult);
 public sealed record CommunityCatalogEntry(string Id, int Revision, CommunityContribution Contribution,
@@ -27,7 +27,7 @@ public static class CommunityCatalog
         {
             int count = reader.ReadBlock(chars, 0, chars.Length);
             string json = new string(chars, 0, count);
-            return Parse(json.StartsWith('\uFEFF') ? json[1..] : json);
+            return Parse(json.StartsWith('\uFEFF') ? json[1..] : json).Where(entry => entry.Status != CommunityReviewStatus.UserReported).ToArray();
         }
         catch (DecoderFallbackException ex) { throw new FormatException("Catalog must be valid UTF-8.", ex); }
     }
@@ -60,7 +60,7 @@ public static class CommunityCatalog
         CommunityConfiguration.CheckSingleLine(entry.Reviewer, "Reviewer", 120);
         CommunityConfiguration.CheckDate(entry.ReviewDate, "Review date");
         CommunityConfiguration.CheckText(entry.ReviewNotes, "Review notes", 2000);
-        if (entry.Status == CommunityReviewStatus.UserReported)
+        if (entry.Status is CommunityReviewStatus.UserReported or CommunityReviewStatus.UserVerified)
         {
             if (entry.Confirmation is not null) throw new FormatException("User-reported entries must not include independent confirmation.");
             return;
@@ -88,14 +88,14 @@ public static class CommunityCatalog
     public static string GetConfirmationLabel(CommunityCatalogEntry entry)
     {
         ValidateEntry(entry);
-        return entry.Status == CommunityReviewStatus.IndependentlyConfirmed ? "Confirmed" : "Not confirmed";
+        return entry.Status switch { CommunityReviewStatus.IndependentlyConfirmed => "Independently confirmed", CommunityReviewStatus.UserVerified => "User verified - original setup only", _ => "Not confirmed" };
     }
     public static string BuildPreview(CommunityCatalogEntry entry)
     {
         ValidateEntry(entry);
         string status = GetConfirmationLabel(entry) + (entry.Status == CommunityReviewStatus.IndependentlyConfirmed
             ? "\r\nConfirmation covers only the original setup and operations marked Passed by both the contributor and separate tester below. Failed and untested operations are not confirmed."
-            : "\r\nMaintainer data review does not establish confirmation.");
+            : entry.Status == CommunityReviewStatus.UserVerified ? "\r\nThe owner reports this exact setup as working. This is not independent confirmation, universal compatibility, or a claim that every operation passed. Review the limitations below." : "\r\nMaintainer data review does not establish confirmation.");
         string confirmation = entry.Confirmation is { } c
             ? $"\r\nSeparate tester: {c.Tester}\r\nConfirmation date: {c.TestDate}\r\nIndependent evidence: {c.Evidence}\r\nIndependent send: {c.SendResult}\r\nIndependent receive: {c.ReceiveResult}\r\nIndependent drip-feed: {c.DripFeedResult}" : "";
         return $"{status}\r\nCatalog ID: {entry.Id}\r\nRevision: {entry.Revision}\r\nReviewer: {entry.Reviewer}\r\nReview date: {entry.ReviewDate}\r\nReview notes: {entry.ReviewNotes}{confirmation}\r\n\r\n" +

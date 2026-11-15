@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Siemens SINUMERIK 810D / 840D (PCIN ASCII)",
+  "settings": {
+    "baudRate": 19200,
+    "dataBits": 8,
+    "parity": "None",
+    "stopBits": "One",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": false,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Siemens SINUMERIK 810D / 840D (PCIN ASCII)",
+    "controller": "Siemens SINUMERIK 810D / 840D (PCIN ASCII)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Use PCIN ASCII/punched-tape format, not archive protocol. Match the V24 interface and select XON/XOFF. Reference: https://support.industry.siemens.com/cs/attachments/108838303/INC_0405_en.pdf",
+    "contributorAlias": null
+  }
+}

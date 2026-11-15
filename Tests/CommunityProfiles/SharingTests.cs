@@ -3,7 +3,7 @@ using static Checks;
 
 internal static class SharingTests
 {
-    static CommunityContribution Quick(string description="Synthetic machine/controller", string? notes=null) => CommunitySharing.CreateQuickContribution(CncProfile.BuiltIn[0],description,notes,"synthetic-version");
+    static CommunityContribution Quick(string description="Synthetic machine/controller", string? notes=null) => CommunitySharing.CreateQuickContribution(ProfileFixtures.Baseline[0],description,notes,"synthetic-version");
     static string ExtractJson(string post)
     {
         var lines = post.Split('\n');
@@ -33,7 +33,7 @@ internal static class SharingTests
                 That(parsed==c,"Exact posted JSON changed contribution");
                 That(CommunityConfiguration.BuildPreview(c).StartsWith("Not confirmed\r\n",StringComparison.Ordinal),"Quick contribution promoted");
             }
-            foreach(var original in CncProfile.BuiltIn) {
+            foreach(var original in ProfileFixtures.Baseline) {
                 var c=CommunitySharing.CreateQuickContribution(original,"Synthetic",null,"test");
                 var back=CommunityConfiguration.Parse(ExtractJson(CommunitySharing.BuildGitHubPost(c)));
                 That(c.Settings==back.Settings,"Quick path loses transfer settings");
@@ -41,7 +41,7 @@ internal static class SharingTests
         });
         Checks.Run("Quick sharing excludes local data and never puts payload in GitHub URL",()=>{
             const string privateValue="SYNTHETIC_PRIVATE_account_path_program_COM1234";
-            var profile=CncProfile.BuiltIn[0] with {Id=privateValue,Name=privateValue,PortName=privateValue,Guidance=privateValue,SourceUrl=privateValue};
+            var profile=ProfileFixtures.Baseline[0] with {Id=privateValue,Name=privateValue,PortName=privateValue,Guidance=privateValue,SourceUrl=privateValue};
             var c=CommunitySharing.CreateQuickContribution(profile,"Public explicit description","Public deliberate notes","test");
             var post=CommunitySharing.BuildGitHubPost(c);
             That(!post.Contains(privateValue),"Private local data leaked into post");
@@ -56,7 +56,7 @@ internal static class SharingTests
             foreach(var bad in new[] {new string('x',2001),"x\0y","x\u202ey","x\u2066y"}) Rejects(()=>Quick(notes:bad));
             That(Quick("  Public description  "," deliberate\r\nnotes\t ").Context.Limitations==" deliberate\r\nnotes\t ","Notes were rewritten");
             That(Quick("  Public description  ").Title=="Public description","Description trimming mismatch");
-            Rejects(()=>CommunitySharing.CreateQuickContribution(CncProfile.BuiltIn[0],"Synthetic",null,""));
+            Rejects(()=>CommunitySharing.CreateQuickContribution(ProfileFixtures.Baseline[0],"Synthetic",null,""));
         });
         Checks.Run("Windows preview line endings preserve exact reviewed payload and fenced JSON",()=>{
             const string notes="First\r\nSecond\nThird\rFourth\u2028Fifth\u2029``` @mention <b>text</b>";

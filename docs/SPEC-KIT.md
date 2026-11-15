@@ -39,7 +39,7 @@ The tracked scaffold is already initialized. **Do not rerun initialization over 
 Open this repository in a fresh Codex session so its `.agents/skills` are discovered. In Codex chat, invoke **dollar-prefixed hyphenated skills**, not the historical `/speckit.*` prompts:
 
 ```text
-$speckit-constitution Review the existing C2C DNC constitution; preserve all machine-safety and private-release boundaries.
+$speckit-constitution Review the existing C2C DNC constitution; preserve all machine-safety and release-authorization boundaries.
 $speckit-specify Describe the next authorized feature and its acceptance criteria.
 $speckit-clarify
 $speckit-plan Use the existing offline Windows WinForms .NET 10 architecture and preserve serial behavior.
@@ -71,7 +71,7 @@ The bundled automation can be inspected with `specify workflow list`, `specify w
 - Pinned Codex docs: https://github.com/github/spec-kit/blob/55264c2f2f2d1146f02abc543cb913dcdf1f9342/docs/integrations/codex.md
 - Upstream MIT license is preserved in [third_party/spec-kit/LICENSE](../third_party/spec-kit/LICENSE).
 
-Generated upstream skills, scripts, templates and workflow retain upstream behavior; the project constitution and feature documents are local authored content. The Spec Kit MIT license applies to Spec Kit only. It does **not** license the C2C DNC application or authorize public publication. The owner will choose the application's license separately.
+Generated upstream skills, scripts, templates and workflow retain upstream behavior; the project constitution and feature documents are local authored content. The Spec Kit MIT license applies to Spec Kit only. C2C-owned application code and starter profiles now use the separate root MIT License selected by the owner. Neither license is a machine-compatibility claim or an instruction to publish without release review.
 
 ## Verification boundary
 

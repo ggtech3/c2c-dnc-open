@@ -14,9 +14,9 @@
     <AssemblyTitle>C2C DNC Open Preview</AssemblyTitle>
     <Product>C2C DNC Open Preview</Product>
     <Description>RS-232 CNC program sender and receiver</Description>
-    <Version>0.9.8-open-preview.1</Version>
-    <AssemblyVersion>0.9.8.1</AssemblyVersion>
-    <FileVersion>0.9.8.1</FileVersion>
+    <Version>0.9.8-open-preview.2</Version>
+    <AssemblyVersion>0.9.8.2</AssemblyVersion>
+    <FileVersion>0.9.8.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

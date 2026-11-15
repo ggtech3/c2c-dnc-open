@@ -8,10 +8,12 @@
   </PropertyGroup>
   <ItemGroup><PackageReference Include="System.IO.Ports" Version="10.0.0" /></ItemGroup>
   <ItemGroup>
+    <Compile Include="../../ProfileRepository.cs" Link="ProfileRepository.cs" />
     <Compile Include="../../CncProfile.cs" Link="CncProfile.cs" />
     <Compile Include="../../CommunityConfiguration.cs" Link="CommunityConfiguration.cs" />
     <Compile Include="../../CommunityCatalog.cs" Link="CommunityCatalog.cs" />
     <Compile Include="../../CommunitySharing.cs" Link="CommunitySharing.cs" />
     <EmbeddedResource Include="../../Assets/community-configurations.json" LogicalName="C2CDnc.CommunityConfigurations.json" />
   </ItemGroup>
+  <ItemGroup><Compile Include="../ProfileFixtures.cs" Link="ProfileFixtures.cs" /></ItemGroup>
 </Project>

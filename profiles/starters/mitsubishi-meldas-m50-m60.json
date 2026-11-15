@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Mitsubishi MELDAS M50 / M60 (starting point)",
+  "settings": {
+    "baudRate": 4800,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "One",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": true,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Mitsubishi MELDAS M50 / M60 (starting point)",
+    "controller": "Mitsubishi MELDAS M50 / M60 (starting point)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Verify the active IN/OUT device, port, DC1/DC3 control, ISO output, and the 910x/920x parameter groups. Reference: https://www.aggsoft.com/cnc-dnc/mitsubishi.htm",
+    "contributorAlias": null
+  }
+}

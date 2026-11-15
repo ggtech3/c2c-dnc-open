@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Mazak Fusion 640M (EIA/ISO starting point)",
+  "settings": {
+    "baudRate": 9600,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "Two",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\r\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": true,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Mazak Fusion 640M (EIA/ISO starting point)",
+    "controller": "Mazak Fusion 640M (EIA/ISO starting point)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. EIA/ISO text programs only. Select TAPE/ASCII format and verify the control\u0027s TAP parameters and DC control. Reference: https://www.aggsoft.com/cnc-dnc/mazak.htm",
+    "contributorAlias": null
+  }
+}

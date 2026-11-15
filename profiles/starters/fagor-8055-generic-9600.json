@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Fagor 8055 (Generic RS-232, 9600)",
+  "settings": {
+    "baudRate": 9600,
+    "dataBits": 8,
+    "parity": "None",
+    "stopBits": "One",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\n",
+    "lineDelayMilliseconds": 0,
+    "receivePercentFramed": false,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Fagor 8055 (Generic RS-232, 9600)",
+    "controller": "Fagor 8055 (Generic RS-232, 9600)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Slower starting point: use Serial 2 with P000=7, P001=1, P002=0, P003=0, P004=0, P008=0, and P010=ON; then restart the control. Reference: https://dmscncrouters.com/wp-content/uploads/2016/05/Fagor-CNC-8055-Installation-Manual-English.pdf",
+    "contributorAlias": null
+  }
+}

@@ -2,7 +2,7 @@
 
 ## Current status
 
-C2C DNC Open Preview is private owner-review software. It is not a security-certified or machine-validated release. Existing commercial editions are outside this repository's support scope.
+C2C DNC Open Preview is software prepared for public use under MIT for C2C-owned material. It is not a security-certified or machine-validated release. Existing commercial editions are outside this repository's support scope.
 
 ## Report an issue privately
 

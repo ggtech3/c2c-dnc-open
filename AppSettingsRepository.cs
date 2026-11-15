@@ -20,6 +20,11 @@ public sealed class AppSettingsRepository
         "C2CDncOpenPreview",
         "settings.json");
 
+    public AppSettingsRepository(string? storagePath = null)
+    {
+        if (storagePath is not null) filePath = storagePath;
+    }
+
     public AppSettings Load()
     {
         try

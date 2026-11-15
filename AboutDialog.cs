@@ -7,13 +7,13 @@ public sealed class AboutDialog : Form
     private const string PreviewText = """
         OPEN PREVIEW
 
-        This private review build runs immediately, with no registration, activation, customer name, license key, purchase step, or transfer limit. It is based on C2C DNC 0.9.8 / v28.
+        This open-source edition runs immediately, with no registration, activation, customer name, license key, purchase step, or transfer limit. It is based on C2C DNC 0.9.8 / v28.
 
         Your existing C2C DNC installation and its settings are separate. This preview stores its own preferences, profiles, and transfer log under %LOCALAPPDATA%\C2CDncOpenPreview.
 
-        This is a product-behavior preview for the owner to review, not a public release or an open-source licensing grant. Distribution terms have not been decided.
+        C2C-owned code and starter profiles are MIT licensed; see LICENSE and THIRD-PARTY-NOTICES.md. Unverified starters are optional repository downloads. User-verified entries cover their reported setup only, not universal compatibility.
 
-        Verify every CNC program, machine profile, serial setting, and cable before use. This preview has not been validated on a live CNC machine.
+        Verify every CNC program, machine profile, serial setting, and cable before use. Software testing is not live CNC validation. No profile is active on first launch.
         """;
 
     private const string SafetyText = """

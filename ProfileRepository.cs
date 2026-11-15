@@ -13,11 +13,11 @@ public sealed class ProfileRepository
     private readonly string filePath;
     private readonly string legacyFilePath;
 
-    public ProfileRepository()
+    public ProfileRepository(string? storagePath = null)
     {
         string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         string directory = Path.Combine(localAppData, "C2CDncOpenPreview");
-        filePath = Path.Combine(directory, "profiles.json");
+        filePath = storagePath ?? Path.Combine(directory, "profiles.json");
         // This review build never reads or overwrites another edition's profiles.
         legacyFilePath = filePath;
     }
@@ -41,30 +41,15 @@ public sealed class ProfileRepository
                 return CncProfile.BuiltIn.ToList();
             }
 
-            var profiles = new List<CncProfile>();
-            foreach (CncProfile builtIn in CncProfile.BuiltIn)
-            {
-                CncProfile selected = stored.FirstOrDefault(item => item.Id == builtIn.Id) ?? builtIn;
-                // Upgrade the original EMCO preset once with the settings verified
-                // against the user's known-working CIMCO configuration.
-                if (selected.Id == "emco-et342-siemens-810t" && selected.CompatibilityRevision < 1)
-                {
-                    selected = selected with
-                    {
-                        ReceiveIdleTimeoutSeconds = 5,
-                        OmitLinesContainingParenthesis = true,
-                        RemoveReceiveControlCharacters = true,
-                        CheckParity = true,
-                        ParityReplaceCharacter = 35,
-                        CompatibilityRevision = 1
-                    };
-                }
-                profiles.Add(selected);
-            }
-
-            profiles.AddRange(stored.Where(item =>
-                !item.IsBuiltIn &&
-                profiles.All(existing => existing.Id != item.Id)));
+            // Saved profiles belong to the user. Removing a bundled starter must not
+            // delete it or reset its settings, even if old builds stored IsBuiltIn=true.
+            var profiles = stored.Select(item => item.IsBuiltIn &&
+                    !CncProfile.BuiltIn.Any(b => b.Id == item.Id)
+                ? item with { IsBuiltIn = false,
+                    Guidance = "Legacy local profile - Not confirmed. " + item.Guidance }
+                : item).ToList();
+            foreach (var builtIn in CncProfile.BuiltIn)
+                if (profiles.All(existing => existing.Id != builtIn.Id)) profiles.Add(builtIn);
             return profiles;
         }
         catch (JsonException)

@@ -31,7 +31,7 @@ public sealed class CommunityProfilesDialog : Form
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 46));
         Controls.Add(layout);
-        layout.Controls.Add(new Label { Dock = DockStyle.Fill, Text = "Review every setting and the original test evidence before adding a new local copy.\r\nReports are not universal compatibility guarantees. Verify your machine, adapter, cable and settings.\r\nNo network access or machine operation occurs here." }, 0, 0);
+        layout.Controls.Add(new Label { Dock = DockStyle.Fill, Text = "Review every setting and the original test evidence before adding a new local copy.\r\nReports are not universal compatibility guarantees. Verify your machine, adapter, cable and settings.\r\nImporting never connects to a machine or starts a transfer." }, 0, 0);
         var source = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty };
         source.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         source.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 180));
@@ -56,10 +56,16 @@ public sealed class CommunityProfilesDialog : Form
         addButton.Click += (_, _) => AddProfile();
         var cancel = new Button { Text = "Cancel", AutoSize = true, DialogResult = DialogResult.Cancel };
         var help = new Button { Text = "How to contribute", AutoSize = true };
-        help.Click += (_, _) => MessageBox.Show(this, "Select a profile in the main window and choose Share. Enter a machine/controller description and optional notes, then review the exact post. Copy and open GitHub copies it and opens the project page; sign in if needed, paste into the issue body and click Submit yourself. Nothing is posted automatically.\r\n\r\nThe ggtech3/c2c-dnc-open repository is currently private, so you need access. You can also save a JSON copy. Remove customer details and other private information before sharing.\r\n\r\nConfirmed applies only to the original setup and operations with independent test evidence. Not confirmed includes files and reports without that evidence. Always check your own setup.", "How to share a profile", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        help.Click += (_, _) => MessageBox.Show(this, "Select a profile in the main window and choose Share. Enter a machine/controller description and optional notes, then review the exact post. Copy and open GitHub copies it and opens the project page; sign in if needed, paste into the issue body and click Submit yourself. Nothing is posted automatically.\r\n\r\nDownloads from the public ggtech3/c2c-dnc-open repository do not require a GitHub account. Submitting a GitHub issue does require an account. You can also save a JSON copy. Remove customer details and other private information before sharing.\r\n\r\nConfirmed applies only to the original setup and operations with independent test evidence. Not confirmed includes files and reports without that evidence. Always check your own setup.", "How to share a profile", MessageBoxButtons.OK, MessageBoxIcon.Information);
         buttons.Controls.Add(addButton);
         buttons.Controls.Add(cancel);
         buttons.Controls.Add(help);
+        var starters = new Button { Text = "Get starter profiles", AutoSize = true };
+        starters.Click += (_, _) => {
+            try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://github.com/ggtech3/c2c-dnc-open/tree/main/profiles/starters") { UseShellExecute = true }); }
+            catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException) { MessageBox.Show(this, "Open https://github.com/ggtech3/c2c-dnc-open/tree/main/profiles/starters in your browser.\r\n" + ex.Message); }
+        };
+        buttons.Controls.Add(starters);
         layout.Controls.Add(buttons, 0, 5);
         CancelButton = cancel;
         catalogBox.SelectedIndexChanged += (_, _) => SelectCatalogEntry();
@@ -74,12 +80,12 @@ public sealed class CommunityProfilesDialog : Form
             IReadOnlyList<CommunityCatalogEntry> entries = CommunityCatalog.LoadEmbedded();
             foreach (CommunityCatalogEntry entry in entries)
                 catalogBox.Items.Add(new CatalogChoice(entry));
-            if (entries.Count > 0) catalogBox.SelectedIndex = 0;
+            if (entries.Count > 0) { catalogBox.SelectedIndex = -1; preview.Text = "Choose a setup to review. User verified means reported working on the original setup only, not independently confirmed. Unverified repository starters import as Not confirmed. Supply your own local name and COM port before adding."; }
             else
             {
                 catalogBox.Items.Add("Community catalog: no entries yet");
                 catalogBox.SelectedIndex = 0;
-                preview.Text = "NO COMMUNITY CONFIGURATIONS YET\r\n\r\nThe catalog is intentionally empty until real contributions and evidence have been reviewed. The 18 built-in starting profiles are unchanged and are not newly certified.\r\n\r\nYou can import a contribution file for review. External files are always Not confirmed, regardless of claims in their text.\r\n\r\nChoose How to contribute for the simple GitHub sharing steps.";
+                preview.Text = "NO COMMUNITY CONFIGURATIONS YET\r\n\r\nThe catalog is intentionally empty until real contributions and evidence have been reviewed. Unverified starters are repository downloads, not bundled machine presets.\r\n\r\nYou can import a contribution file for review. External files are always Not confirmed, regardless of claims in their text.\r\n\r\nChoose How to contribute for the simple GitHub sharing steps.";
             }
         }
         catch (Exception ex) when (ex is FormatException or IOException or InvalidOperationException)
@@ -147,7 +153,6 @@ public sealed class CommunityProfilesDialog : Form
 
     private sealed record CatalogChoice(CommunityCatalogEntry Entry)
     {
-        public override string ToString() => Entry.Contribution.Title + (Entry.Status == CommunityReviewStatus.IndependentlyConfirmed
-            ? " - Confirmed" : " - Not confirmed");
+        public override string ToString() => Entry.Contribution.Title + " - " + CommunityCatalog.GetConfirmationLabel(Entry);
     }
 }

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Yasnac i80 (starting point)",
+  "settings": {
+    "baudRate": 9600,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "Two",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\r\n",
+    "lineDelayMilliseconds": 30,
+    "receivePercentFramed": false,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Yasnac i80 (starting point)",
+    "controller": "Yasnac i80 (starting point)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Set the selected RS232C IN and OUT columns to 9600, 2 stop bits, even parity and XON/XOFF; RTS depends on cable wiring. Reference: https://www.aggsoft.com/cnc-dnc/yaskawa.htm",
+    "contributorAlias": null
+  }
+}

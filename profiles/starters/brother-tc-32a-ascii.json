@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Brother TC-32A (ASCII starting point)",
+  "settings": {
+    "baudRate": 9600,
+    "dataBits": 7,
+    "parity": "None",
+    "stopBits": "One",
+    "handshake": "None",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\r\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": false,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Brother TC-32A (ASCII starting point)",
+    "controller": "Brother TC-32A (ASCII starting point)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Select port/object 0 and ASCII protocol. Some programs use %% framing; verify DC codes and the exact Brother control generation. Reference: https://www.aggsoft.com/cnc-dnc/brother.htm",
+    "contributorAlias": null
+  }
+}

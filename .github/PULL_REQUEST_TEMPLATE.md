@@ -18,4 +18,4 @@ State outstanding checks and recovery plan. No live-machine validation is implie
 
 ## Licensing and privacy
 - [ ] No secrets, real customer/NC data, issuer tools or runtime state
-- [ ] I have rights to the proposed material; no new license or redistribution grant is implied
+- [ ] I have rights to contribute this material under the project MIT License and have preserved applicable third-party terms/notices

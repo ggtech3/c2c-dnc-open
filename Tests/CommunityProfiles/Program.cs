@@ -8,7 +8,7 @@ using static Checks;
 internal static class Program
 {
     static ContributionContext Context => new("Synthetic machine", "Synthetic controller", "Unknown", "Synthetic setup", "Synthetic adapter", "Synthetic wiring", "test-only", "2026-11-08", "Passed", "NotTested", "NotTested", "Synthetic only, no machine validation", "Tester A");
-    static CommunityContribution Fixture => CommunityConfiguration.CreateContribution(CncProfile.BuiltIn[0], "Synthetic public setup", Context);
+    static CommunityContribution Fixture => CommunityConfiguration.CreateContribution(ProfileFixtures.Baseline[0], "Synthetic public setup", Context);
     static string Json => CommunityConfiguration.Serialize(Fixture);
     static string Change(string json, string path, JsonNode? value, bool remove = false)
     {
@@ -28,9 +28,10 @@ internal static class Program
     static int Main()
     {
         Console.WriteLine("COMMUNITY CONFIGURATION SYNTHETIC CHECKS " + DateTime.UtcNow.ToString("O"));
-        Run("All 18 defaults preserve every portable transfer property", () => {
-            That(CncProfile.BuiltIn.Count == 18, "Baseline count changed");
-            foreach (var p in CncProfile.BuiltIn) {
+        StarterLibraryTests.Run();
+        Run("All 18 historical starter fixtures preserve every portable transfer property", () => {
+            That(ProfileFixtures.Baseline.Count == 18, "Baseline count changed");
+            foreach (var p in ProfileFixtures.Baseline) {
                 var c = CommunityConfiguration.CreateContribution(p, "Synthetic title", Context);
                 var parsed = CommunityConfiguration.Parse(CommunityConfiguration.Serialize(c));
                 var local = CommunityConfiguration.CreateLocalProfile(parsed, "Local synthetic", "COM9999");
@@ -39,7 +40,7 @@ internal static class Program
             }
         });
         Run("Every transfer setting survives non-default boundary values", () => {
-            var p = CncProfile.BuiltIn[0] with { BaudRate = 921600, DataBits = 5, Parity = Parity.Space, StopBits = StopBits.OnePointFive, Handshake = Handshake.RequestToSendXOnXOff, DtrEnable = false, RtsEnable = false, NewLine = "\r", LineDelayMilliseconds = 60000, ReceivePercentFramed = true, ReceiveIdleTimeoutSeconds = null, StripNulls = false, RemoveWhitespace = false, OmitParenthesisLines = false, OmitLinesContainingParenthesis = false, RemoveReceiveControlCharacters = false, CheckParity = false, ParityReplaceCharacter = 127 };
+            var p = ProfileFixtures.Baseline[0] with { BaudRate = 921600, DataBits = 5, Parity = Parity.Space, StopBits = StopBits.OnePointFive, Handshake = Handshake.RequestToSendXOnXOff, DtrEnable = false, RtsEnable = false, NewLine = "\r", LineDelayMilliseconds = 60000, ReceivePercentFramed = true, ReceiveIdleTimeoutSeconds = null, StripNulls = false, RemoveWhitespace = false, OmitParenthesisLines = false, OmitLinesContainingParenthesis = false, RemoveReceiveControlCharacters = false, CheckParity = false, ParityReplaceCharacter = 127 };
             TransferEqual(p, CommunityConfiguration.CreateLocalProfile(CommunityConfiguration.Parse(CommunityConfiguration.Serialize(CommunityConfiguration.CreateContribution(p,"Synthetic",Context))), "Local", "COM1"));
             var lower = p with { BaudRate = 50, DataBits = 8, LineDelayMilliseconds = 0, ReceiveIdleTimeoutSeconds = 1, ParityReplaceCharacter = 0, NewLine = "\n" };
             CommunityConfiguration.Validate(CommunityConfiguration.CreateContribution(lower, "Synthetic", Context));
@@ -47,7 +48,7 @@ internal static class Program
         });
         Run("Export allowlist excludes local identity, port, guidance, source and private text", () => {
             const string secret = "SYNTHETIC_PRIVATE_SENTINEL_account_program_path";
-            var p = CncProfile.BuiltIn[0] with { Id = secret, Name = secret, PortName = secret, Guidance = secret, SourceUrl = secret, CompatibilityRevision = 999 };
+            var p = ProfileFixtures.Baseline[0] with { Id = secret, Name = secret, PortName = secret, Guidance = secret, SourceUrl = secret, CompatibilityRevision = 999 };
             var json = CommunityConfiguration.Serialize(CommunityConfiguration.CreateContribution(p, "Public deliberate title", Context));
             That(!json.Contains(secret), "Local data leaked");
             var fields = Members(JsonNode.Parse(json)!.AsObject()).Select(x => x.Key).ToArray();
@@ -121,7 +122,7 @@ internal static class Program
             } finally { Directory.Delete(dir,true); }
         });
         Run("Repeated imports are unique custom copies and never mutate source lists", () => {
-            var originals = CncProfile.BuiltIn.ToArray();
+            var originals = ProfileFixtures.Baseline.ToArray();
             var before = JsonSerializer.Serialize(originals);
             var ids = new HashSet<string>(originals.Select(x=>x.Id));
             for (var i=0;i<20;i++) {
@@ -137,7 +138,7 @@ internal static class Program
             That(preview.StartsWith("Not confirmed\r\n", StringComparison.Ordinal) && preview.Contains(Json),"Preview omits full packet or untrusted status");
         });
         Run("Persistence is save-before-return; failure and invalid candidates leave originals unchanged", () => {
-            var original = CncProfile.BuiltIn.ToList();
+            var original = ProfileFixtures.Baseline.ToList();
             var before = JsonSerializer.Serialize(original);
             var imported = CommunityConfiguration.CreateLocalProfile(Fixture, "New synthetic copy", "COM1");
             int calls = 0;
@@ -166,7 +167,7 @@ internal static class Program
                 Rejects(()=>CommunityConfiguration.CreateLocalProfile(Fixture,"Local" + separator + "CONFIRMED","COM1"));
                 Rejects(()=>CommunityConfiguration.CreateLocalProfile(Fixture,"Local","COM1" + separator));
                 var imported = CommunityConfiguration.CreateLocalProfile(Fixture,"Local","COM1") with { Name="Local" + separator + "CONFIRMED" };
-                Rejects(()=>CommunityConfiguration.SaveNewProfile(CncProfile.BuiltIn,imported,_=>throw new Exception("Injected label reached persistence")));
+                Rejects(()=>CommunityConfiguration.SaveNewProfile(ProfileFixtures.Baseline,imported,_=>throw new Exception("Injected label reached persistence")));
             }
         });        CatalogTests.Run();
         SharingTests.Run();

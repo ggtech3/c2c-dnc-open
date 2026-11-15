@@ -13,6 +13,7 @@ public sealed class MainForm : Form
     private static readonly Color Muted = Color.FromArgb(91, 105, 122);
 
     private readonly ComboBox profileBox = new();
+    private readonly Button chooseVerifiedProfileButton = new() { Text = "Choose verified setup (3 available)...", AccessibleName = "Choose an offline verified setup" };
     private readonly ComboBox portBox = new();
     private readonly Label profileSummary = new();
     private readonly RichTextBox programText = new();
@@ -107,8 +108,13 @@ public sealed class MainForm : Form
     private bool updatingTransferLayout;
     private bool checkingExternalFiles;
 
-    public MainForm()
+    public MainForm(string? dataDirectory = null, bool enumeratePorts = true)
     {
+        if (dataDirectory is not null)
+        {
+            profileRepository = new ProfileRepository(Path.Combine(dataDirectory, "profiles.json"));
+            appSettingsRepository = new AppSettingsRepository(Path.Combine(dataDirectory, "settings.json"));
+        }
         AppSettings savedSettings = appSettingsRepository.Load();
         darkMode = savedSettings.DarkMode;
         hiddenProfileIds = savedSettings.HiddenProfileIds?.ToHashSet(StringComparer.Ordinal)
@@ -148,7 +154,7 @@ public sealed class MainForm : Form
         };
         RefreshRecentFiles();
         LoadProfiles();
-        RefreshPorts();
+        if (enumeratePorts) RefreshPorts();
         SetBusy(false);
         highlightTimer.Tick += (_, _) =>
         {
@@ -338,6 +344,9 @@ public sealed class MainForm : Form
         profileBox.SelectedIndexChanged += (_, _) => ProfileChanged();
         profileCard.Controls.Add(FieldLabel("CNC PROFILE", 18, 10));
         profileCard.Controls.Add(profileBox);
+        chooseVerifiedProfileButton.Bounds = profileBox.Bounds;
+        chooseVerifiedProfileButton.Click += (_, _) => BrowseCommunityProfiles();
+        profileCard.Controls.Add(chooseVerifiedProfileButton);
 
         portBox.DropDownStyle = ComboBoxStyle.DropDown;
         portBox.Font = new Font("Segoe UI Semibold", 10F);
@@ -860,8 +869,16 @@ public sealed class MainForm : Form
     private void ProfileChanged()
     {
         shareProfileButton.Enabled = operationCancellation is null && SelectedProfile is not null;
+        bool hasProfile = SelectedProfile is not null;
+        editProfileButton.Enabled = hasProfile && operationCancellation is null;
+        deleteProfileButton.Enabled = SelectedProfile is { IsBuiltIn: false } && operationCancellation is null;
+        sendButton.Enabled = partialSendButton.Enabled = receiveButton.Enabled = hasProfile && operationCancellation is null;
         if (profileBox.SelectedItem is not CncProfile profile)
         {
+            portBox.Text = "";
+            profileSummary.Text = "No machine profile selected. Choose Community configurations to review a verified setup or import a Not confirmed starter. Select your own COM port before use.";
+            activeProfileLabel.Text = "Machine: none selected";
+            statusLabel.Text = "Add or import a profile, then verify your setup before transfer.";
             return;
         }
 
@@ -1129,7 +1146,7 @@ public sealed class MainForm : Form
         profileBox.Enabled = !busy;
         portBox.Enabled = !busy;
         refreshPortsButton.Enabled = !busy;
-        editProfileButton.Enabled = !busy;
+        editProfileButton.Enabled = !busy && SelectedProfile is not null;
         addProfileButton.Enabled = !busy;
         deleteProfileButton.Enabled = !busy && SelectedProfile is { IsBuiltIn: false };
         profileVisibilityButton.Enabled = !busy;
@@ -1139,7 +1156,7 @@ public sealed class MainForm : Form
         recentFilesBox.Enabled = !busy;
         documentTabs.Enabled = !busy;
         newDocumentButton.Enabled = !busy;
-        bool transfersAvailable = !busy;
+        bool transfersAvailable = !busy && SelectedProfile is not null;
         sendButton.Enabled = transfersAvailable;
         partialSendButton.Enabled = transfersAvailable;
         receiveButton.Enabled = transfersAvailable;
@@ -1865,7 +1882,7 @@ public sealed class MainForm : Form
 
     private void AddProfile()
     {
-        CncProfile template = SelectedProfile ?? CncProfile.BuiltIn[0];
+        CncProfile template = SelectedProfile ?? CncProfile.NewBlank();
         CncProfile newProfile = template with
         {
             Id = Guid.NewGuid().ToString("N"),
@@ -1906,10 +1923,10 @@ public sealed class MainForm : Form
         profiles.RemoveAll(item => item.Id == selected.Id);
         hiddenProfileIds.Remove(selected.Id);
         SaveAppSettings();
-        SaveAndReloadProfiles(CncProfile.BuiltIn[0].Id);
+        SaveAndReloadProfiles(profiles.FirstOrDefault()?.Id);
     }
 
-    private void SaveAndReloadProfiles(string selectedId)
+    private void SaveAndReloadProfiles(string? selectedId)
     {
         try
         {
@@ -2010,7 +2027,10 @@ public sealed class MainForm : Form
         profileBox.DataSource = visibleProfiles;
         profileBox.DisplayMember = nameof(CncProfile.Name);
         int index = visibleProfiles.FindIndex(profile => profile.Id == selectedId);
-        profileBox.SelectedIndex = Math.Max(0, index);
+        profileBox.SelectedIndex = visibleProfiles.Count == 0 ? -1 : Math.Max(0, index);
+        chooseVerifiedProfileButton.Visible = profiles.Count == 0;
+        if (profiles.Count == 0) chooseVerifiedProfileButton.BringToFront();
+        ProfileChanged();
     }
 
     private void ShowSearch(bool showReplace)

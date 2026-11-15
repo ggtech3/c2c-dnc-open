@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Siemens SINUMERIK 802D sl (V24)",
+  "settings": {
+    "baudRate": 19200,
+    "dataBits": 8,
+    "parity": "None",
+    "stopBits": "One",
+    "handshake": "RequestToSend",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\r\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": false,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Siemens SINUMERIK 802D sl (V24)",
+    "controller": "Siemens SINUMERIK 802D sl (V24)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Starter preset: select punched-tape/text format and verify the V24 screen. Reference: https://support.industry.siemens.com/cs/attachments/104946900/802Dsl_BE_0505_en.pdf",
+    "contributorAlias": null
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "HEIDENHAIN TNC 151/155/351/355 (EXT ASCII)",
+  "settings": {
+    "baudRate": 9600,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "One",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\r\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": false,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "HEIDENHAIN TNC 151/155/351/355 (EXT ASCII)",
+    "controller": "HEIDENHAIN TNC 151/155/351/355 (EXT ASCII)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Select EXT standard transfer with MP222/MP5020=168. C2C does not implement HEIDENHAIN FE or LSV2 block protocols. Reference: https://product.heidenhain.de/JPBC/image/FILEBASE_PUBLIC/599456-02-A-02.pdf",
+    "contributorAlias": null
+  }
+}

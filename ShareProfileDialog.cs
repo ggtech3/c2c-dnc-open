@@ -70,7 +70,7 @@ public sealed class ShareProfileDialog : Form
             layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 64));
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 46));
-            var privacy = new Label { Dock = DockStyle.Top, AutoSize = true, Margin = new Padding(3, 3, 3, 12), Text = "Recipient: ggtech3/c2c-dnc-open on GitHub (currently private). You need repository access and may need to sign in.\r\n\r\nCheck the exact post below. Your local profile name, COM port, guidance, programs and logs are excluded. Remove private details from your description and notes.\r\n\r\nCopying replaces your clipboard; clipboard history or sync may retain this text. GitHub opens without your data. You must paste into the issue body and click Submit yourself." };
+            var privacy = new Label { Dock = DockStyle.Top, AutoSize = true, Margin = new Padding(3, 3, 3, 12), Text = "Recipient: ggtech3/c2c-dnc-open on public GitHub. Submitting requires a GitHub account; downloading does not.\r\n\r\nCheck the exact post below. Your local profile name, COM port, guidance, programs and logs are excluded. Remove private details from your description and notes.\r\n\r\nCopying replaces your clipboard; clipboard history or sync may retain this text. GitHub opens without your data. You must paste into the issue body and click Submit yourself." };
             void ConstrainPrivacyWidth() => privacy.MaximumSize = new Size(
                 Math.Max(1, layout.ClientSize.Width - layout.Padding.Horizontal - privacy.Margin.Horizontal), 0);
             layout.SizeChanged += (_, _) => ConstrainPrivacyWidth();

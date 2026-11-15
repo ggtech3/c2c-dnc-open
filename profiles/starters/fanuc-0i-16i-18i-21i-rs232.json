@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "FANUC 0i / 16i / 18i / 21i (RS-232)",
+  "settings": {
+    "baudRate": 9600,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "Two",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\r\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": true,
+    "receiveIdleTimeoutSeconds": null,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "FANUC 0i / 16i / 18i / 21i (RS-232)",
+    "controller": "FANUC 0i / 16i / 18i / 21i (RS-232)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Starter preset: verify I/O channel and parameters 0101\u20130103/0121\u20130123. Reference: https://www.drivesul.com.br/template/imagens/manuais/manuais-fanuc/fanuc-series-0i-model-f/FANUC%20Series%200i%20MODEL%20F%20-%20PARAMETER%20MANUAL%20.pdf",
+    "contributorAlias": null
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "FANUC 6 / 10 / 11 / 12 / 15 (legacy starting point)",
+  "settings": {
+    "baudRate": 4800,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "Two",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\r\n",
+    "lineDelayMilliseconds": 30,
+    "receivePercentFramed": true,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "FANUC 6 / 10 / 11 / 12 / 15 (legacy starting point)",
+    "controller": "FANUC 6 / 10 / 11 / 12 / 15 (legacy starting point)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Legacy FANUC starting point only. Verify the active reader/punch channel, ISO code, baud and I/O parameters before transfer. Reference: https://www.aggsoft.com/cnc-dnc/fanuc.htm",
+    "contributorAlias": null
+  }
+}

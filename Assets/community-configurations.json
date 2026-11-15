@@ -1,4 +1,149 @@
 {
   "schemaVersion": 1,
-  "entries": []
+  "entries": [
+    {
+      "id": "emco-et342-siemens-810t",
+      "revision": 1,
+      "contribution": {
+        "schemaVersion": 1,
+        "title": "EMCO ET342 / Siemens 810T",
+        "settings": {
+          "baudRate": 1200,
+          "dataBits": 7,
+          "parity": "Even",
+          "stopBits": "Two",
+          "handshake": "None",
+          "dtrEnable": true,
+          "rtsEnable": true,
+          "newLine": "\r\n",
+          "lineDelayMilliseconds": 150,
+          "receivePercentFramed": true,
+          "receiveIdleTimeoutSeconds": 5,
+          "stripNulls": true,
+          "removeWhitespace": true,
+          "omitParenthesisLines": true,
+          "omitLinesContainingParenthesis": true,
+          "removeReceiveControlCharacters": true,
+          "checkParity": true,
+          "parityReplaceCharacter": 35
+        },
+        "context": {
+          "machine": "EMCO ET342 / Siemens 810T",
+          "controller": "EMCO ET342 / Siemens 810T",
+          "firmwareOptions": "Not recorded; confirm your control revision",
+          "machineSideSettings": "Match every portable setting below with the machine",
+          "adapterDriver": "Not recorded; verify your adapter/driver",
+          "cableWiring": "Not recorded; verify cable pinout",
+          "applicationVersion": "Historical C2C DNC setup",
+          "testDate": "",
+          "sendResult": "NotTested",
+          "receiveResult": "NotTested",
+          "dripFeedResult": "NotTested",
+          "limitations": "Owner confirmed this known setup as working on 2026-11-15. Operation-by-operation results and independent test evidence were not supplied. Not universal validation. Match all controller and cable settings. Includes compatibility revision 1 settings previously matched to the known-working CIMCO configuration; verify receive/parity behavior for your machine.",
+          "contributorAlias": null
+        }
+      },
+      "status": "UserVerified",
+      "reviewer": "Project owner",
+      "reviewDate": "2026-11-15",
+      "reviewNotes": "Owner reports this setup as working. Not independently confirmed; no operation-specific coverage is asserted.",
+      "confirmation": null
+    },
+    {
+      "id": "yasnac-mx3",
+      "revision": 1,
+      "contribution": {
+        "schemaVersion": 1,
+        "title": "Yasnac MX-3",
+        "settings": {
+          "baudRate": 9600,
+          "dataBits": 7,
+          "parity": "Even",
+          "stopBits": "Two",
+          "handshake": "XOnXOff",
+          "dtrEnable": true,
+          "rtsEnable": true,
+          "newLine": "\r\n",
+          "lineDelayMilliseconds": 50,
+          "receivePercentFramed": false,
+          "receiveIdleTimeoutSeconds": 5,
+          "stripNulls": true,
+          "removeWhitespace": false,
+          "omitParenthesisLines": false,
+          "omitLinesContainingParenthesis": false,
+          "removeReceiveControlCharacters": false,
+          "checkParity": false,
+          "parityReplaceCharacter": 0
+        },
+        "context": {
+          "machine": "Yasnac MX-3",
+          "controller": "Yasnac MX-3",
+          "firmwareOptions": "Not recorded; confirm your control revision",
+          "machineSideSettings": "Match every portable setting below with the machine",
+          "adapterDriver": "Not recorded; verify your adapter/driver",
+          "cableWiring": "Not recorded; verify cable pinout",
+          "applicationVersion": "Historical C2C DNC setup",
+          "testDate": "",
+          "sendResult": "NotTested",
+          "receiveResult": "NotTested",
+          "dripFeedResult": "NotTested",
+          "limitations": "Owner confirmed this known setup as working on 2026-11-15. Operation-by-operation results and independent test evidence were not supplied. Not universal validation. Match all controller and cable settings.",
+          "contributorAlias": null
+        }
+      },
+      "status": "UserVerified",
+      "reviewer": "Project owner",
+      "reviewDate": "2026-11-15",
+      "reviewNotes": "Owner reports this setup as working. Not independently confirmed; no operation-specific coverage is asserted.",
+      "confirmation": null
+    },
+    {
+      "id": "haas-classic-control-rs232",
+      "revision": 1,
+      "contribution": {
+        "schemaVersion": 1,
+        "title": "Haas Classic Control (RS-232)",
+        "settings": {
+          "baudRate": 9600,
+          "dataBits": 7,
+          "parity": "Even",
+          "stopBits": "One",
+          "handshake": "XOnXOff",
+          "dtrEnable": true,
+          "rtsEnable": true,
+          "newLine": "\r\n",
+          "lineDelayMilliseconds": 50,
+          "receivePercentFramed": true,
+          "receiveIdleTimeoutSeconds": null,
+          "stripNulls": true,
+          "removeWhitespace": false,
+          "omitParenthesisLines": false,
+          "omitLinesContainingParenthesis": false,
+          "removeReceiveControlCharacters": false,
+          "checkParity": false,
+          "parityReplaceCharacter": 0
+        },
+        "context": {
+          "machine": "Haas Classic Control (RS-232)",
+          "controller": "Haas Classic Control (RS-232)",
+          "firmwareOptions": "Not recorded; confirm your control revision",
+          "machineSideSettings": "Match every portable setting below with the machine",
+          "adapterDriver": "Not recorded; verify your adapter/driver",
+          "cableWiring": "Not recorded; verify cable pinout",
+          "applicationVersion": "Historical C2C DNC setup",
+          "testDate": "",
+          "sendResult": "NotTested",
+          "receiveResult": "NotTested",
+          "dripFeedResult": "NotTested",
+          "limitations": "Owner confirmed this known setup as working on 2026-11-15. Operation-by-operation results and independent test evidence were not supplied. Not universal validation. Field-tested successfully on an older Haas Classic Control. Verify Haas Settings 11\u201314, 25, and 37 because machine configurations can differ. Reference: https://www.haascnc.com/content/dam/haascnc/en/service/manual/operator/english---mill-operator%27s-manual---2009.pdf",
+          "contributorAlias": null
+        }
+      },
+      "status": "UserVerified",
+      "reviewer": "Project owner",
+      "reviewDate": "2026-11-15",
+      "reviewNotes": "Owner reports this setup as working. Not independently confirmed; no operation-specific coverage is asserted.",
+      "confirmation": null
+    }
+  ]
 }

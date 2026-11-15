@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Fagor 8040 (NC-Link starting point)",
+  "settings": {
+    "baudRate": 9600,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "Two",
+    "handshake": "RequestToSend",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\n",
+    "lineDelayMilliseconds": 30,
+    "receivePercentFramed": false,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Fagor 8040 (NC-Link starting point)",
+    "controller": "Fagor 8040 (NC-Link starting point)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Starting point only: match the CNC serial parameters and place the control in Receive DNC / Waiting for Data before sending. Reference: https://industrialmonitordirect.com/blogs/knowledgebase/fagor-8040-dnc-configuring-onecnc-nc-link-rs-232-transfer",
+    "contributorAlias": null
+  }
+}

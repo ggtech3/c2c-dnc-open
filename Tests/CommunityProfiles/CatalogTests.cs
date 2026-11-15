@@ -6,7 +6,7 @@ using static Checks;
 
 internal static class CatalogTests
 {
-    static CommunityContribution Contribution => CommunityConfiguration.CreateContribution(CncProfile.BuiltIn[0], "Synthetic catalog fixture", new ContributionContext("Synthetic machine", "Synthetic controller", "Unknown", "Synthetic parameters", "Synthetic adapter", "Synthetic wiring", "test-only", "2026-11-08", "Passed", "NotTested", "NotTested", "Synthetic only", "Tester A"));
+    static CommunityContribution Contribution => CommunityConfiguration.CreateContribution(ProfileFixtures.Baseline[0], "Synthetic catalog fixture", new ContributionContext("Synthetic machine", "Synthetic controller", "Unknown", "Synthetic parameters", "Synthetic adapter", "Synthetic wiring", "test-only", "2026-11-08", "Passed", "NotTested", "NotTested", "Synthetic only", "Tester A"));
     static CommunityCatalogEntry Report => new("synthetic-report", 1, Contribution, CommunityReviewStatus.UserReported, "Synthetic reviewer", "2026-11-08", "Synthetic private review", null);
     static CommunityConfirmation Evidence => new("Tester B", "2026-11-08", "Synthetic independent observation", "Passed", "NotTested", "NotTested");
     static string Encode(params CommunityCatalogEntry[] entries)
@@ -17,14 +17,14 @@ internal static class CatalogTests
     }
     public static void Run()
     {
-        Checks.Run("Real embedded catalog is empty; synthetic reported/confirmed statuses stay distinct", () => {
-            That(CommunityCatalog.LoadEmbedded().Count == 0,"Shipped catalog must not claim synthetic verification");
+        Checks.Run("Three owner-verified embedded setups; synthetic reported/confirmed statuses stay distinct", () => {
+            That(CommunityCatalog.LoadEmbedded().Count == 3 && CommunityCatalog.LoadEmbedded().All(e => e.Status == CommunityReviewStatus.UserVerified),"Only three owner-reported setups ship");
             var report = CommunityCatalog.Parse(Encode(Report)).Single();
             That(CommunityCatalog.GetConfirmationLabel(report) == "Not confirmed" && CommunityCatalog.BuildPreview(report).StartsWith("Not confirmed\r\n", StringComparison.Ordinal),"Report status overstated");
             var confirmed = Report with { Status = CommunityReviewStatus.IndependentlyConfirmed, Confirmation = Evidence };
             var parsed = CommunityCatalog.Parse(Encode(confirmed)).Single();
             var preview = CommunityCatalog.BuildPreview(parsed);
-            That(CommunityCatalog.GetConfirmationLabel(parsed) == "Confirmed" && preview.StartsWith("Confirmed\r\n", StringComparison.Ordinal) && preview.Contains(Evidence.Evidence) && preview.Contains("Independent send: Passed"),"Confirmation evidence missing");
+            That(CommunityCatalog.GetConfirmationLabel(parsed) == "Independently confirmed" && preview.StartsWith("Independently confirmed\r\n", StringComparison.Ordinal) && preview.Contains(Evidence.Evidence) && preview.Contains("Independent send: Passed"),"Confirmation evidence missing");
             var copy = CommunityCatalog.CreateLocalProfile(parsed,"Local","COM1");
             That(!copy.IsBuiltIn && copy.Guidance.Contains("do not inherit confirmation") && copy.Guidance.Contains("revision 1"),"Local copy improperly inherits certification");
         });

@@ -2,62 +2,45 @@
 
 ## Repository status and development
 
-Private owner review only. No open-source license has been selected and no public release is authorized by this snapshot. Read [licensing status](LICENSE-STATUS.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md), [governance](GOVERNANCE.md) and the [Spec Kit workflow](docs/SPEC-KIT.md).
+C2C-owned source and starter profiles are licensed under the [MIT License](LICENSE). This branch prepares the public release; repository visibility and release availability are verified separately before publication. Read [licensing status](LICENSE-STATUS.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md), [governance](GOVERNANCE.md) and the [Spec Kit workflow](docs/SPEC-KIT.md).
 
 The source history starts fresh from a sanitized preview snapshot. Private licensing tools, prior commercial Git history, customer data, runtime state and packaged binaries are excluded. Automated serial checks use a fake endpoint; see [simulation limits](Tests/SerialSimulation/README.md). A passing build or simulation is not machine acceptance.
 
 
-A Windows 11 RS-232 sender/receiver with 18 built-in CNC profiles:
+A Windows 11 RS-232 sender/receiver with optional CNC profiles.
 
 This separate Open Preview is based on 0.9.8/v28. It opens directly, with no
 registration, activation, customer identity, purchase step, or transfer limit.
-Existing trial/paid releases and their data are not changed. This is a private
-owner-review build, not a public release or an open-source licensing grant.
+Existing trial/paid releases and their data are not changed.
 
-- **EMCO ET342 / Siemens 810T** — COM7, 1200 baud, 7E2, no flow
-  control, DTR/RTS on, CR/LF, 150 ms line delay. Receive is framed by
-  `%` markers. NUL bytes and horizontal whitespace are removed. On send,
-  lines containing `(` are omitted. Receive also has a five-second idle
-  fallback, removes control characters below ASCII 32 while preserving line
-  endings, and replaces parity-error characters with `#` (ASCII 35).
-- **Yasnac MX-3** — COM6, 9600 baud, 7E2, XON/XOFF, DTR/RTS on, CR/LF,
-  50 ms line delay. Receive completes after five seconds without data.
-  NUL bytes are removed and other whitespace is preserved.
-- **Haas Classic Control (RS-232)** — historically field-tested in the baseline edition on an older
-  Haas machine at 9600 baud, 7E1, and XON/XOFF. Confirm Haas Settings 11–14,
-  25, and 37 because individual machine configurations can differ.
-- **FANUC 0i / 16i / 18i / 21i (RS-232)** — a 9600 baud, 7E2, XON/XOFF
-  starting point. Confirm the selected I/O channel and its 0101–0103 or
-  0121–0123 parameter group.
-- **Siemens SINUMERIK 802D sl (V24)** — the documented 19200 baud, 8N1,
-  RTS/CTS V24 starting point. Select punched-tape/text format on the control.
-- **Fagor 8040 (NC-Link starting point)** — 9600 baud, 7E2, RTS/CTS and LF.
-  Put the control in Receive DNC / Waiting for Data before sending and verify
-  every controller and cable setting.
-- **Fagor 8055 (Generic RS-232, 115200)** — 115200 baud, 8N1, XON/XOFF and
-  LF for the generic-peripheral protocol (`P004=0`).
-- **Fagor 8055 (Generic RS-232, 9600)** — a slower 8N1, XON/XOFF and LF
-  alternative for existing installations or older serial hardware.
-- **Mazak M32/T32 and Fusion 640M** — EIA/ISO text starting points. Mazatrol
-  conversational transfer is a different protocol and is not supported.
-- **Mitsubishi MELDAS M50/M60** — 4800 baud, 7E1, XON/XOFF and LF.
-- **Okuma OSP 5000/7000** — 4800 baud, 7E1, XON/XOFF and LF.
-- **HEIDENHAIN TNC 151/155/351/355** — EXT standard ASCII at 9600 baud,
-  7E1 and XON/XOFF. FE and LSV2 protocols are not supported.
-- **Fadal CNC 88/88HS** — 9600 baud, fixed 7E1 and XON/XOFF.
-- **Brother TC-32A** — ASCII starting point at 9600 baud, 7N1.
-- **Siemens SINUMERIK 810D/840D** — PCIN ASCII/punched-tape starting point
-  at 19200 baud, 8N1 and XON/XOFF. Archive protocol is not supported.
-- **Yasnac i80** — 9600 baud, 7E2 and XON/XOFF.
-- **Legacy FANUC 6/10/11/12/15** — conservative 4800 baud, 7E2 and
-  XON/XOFF starting point.
+## Get started with profiles
 
-These additional library entries are starting points, not universal settings.
-Machine builders can change CNC parameters, port wiring, and supported transfer
-protocols. Match the profile to the control before connecting or transferring.
-The library deliberately excludes proprietary or error-correcting protocols
-that C2C does not implement, including Mazatrol conversational transfer,
-HEIDENHAIN FE/LSV2, Siemens archive protocol, and XMODEM.
+A fresh installation starts with no machine profiles. Fifteen former presets
+are now downloadable **unverified starting points**, not bundled defaults, in
+[profiles/starters](profiles/starters). Their settings are not newly validated
+by this move. Match every setting to your own controller, adapter and cable.
+
+Once the repository is public, anyone can download its files and available
+release ZIPs without a GitHub account. Open a starter JSON file on GitHub and
+use **Download raw file**. In the app choose **Community configurations**,
+import the file, review the settings, and enter your own local name and COM
+port before choosing **Add profile**. No account, Git installation or online
+connection is needed to import or use a downloaded file. Downloading or
+importing a profile never starts a transfer.
+
+Existing saved profiles and user imports are retained. You can also choose
+**Add profile** to configure your own setup. Neither a downloaded file nor an
+edited local copy inherits a verification badge. Three setup-specific profiles (EMCO/Siemens 810T, Yasnac MX-3 and Haas Classic)
+are available in the catalog based on the owner's report of real-machine testing.
+They are **user-reported tested**, not independently confirmed, and are not
+automatically installed or selected. Review the exact setup and choose your own
+local COM port before adding one. Independently confirmed status still requires
+reviewed evidence from a separate tester. See the [profile workflow](docs/COMMUNITY-CONFIGURATIONS.md).
+
+Machine builders can change parameters, port wiring and supported protocols.
+C2C does not implement Mazatrol conversational transfer, HEIDENHAIN FE/LSV2,
+Siemens archive protocol or XMODEM. Do not use a plain RS-232 starting point
+for those protocols.
 
 The editor shows an estimated send time before a transfer starts. The estimate
 uses the selected profile's filtering, transmitted byte count, serial framing,
@@ -91,7 +74,7 @@ Extract the complete application ZIP to a folder before launching
 1. Connect a proper USB-to-RS-232 adapter and confirm the CNC cable pinout.
    StarTech.com adapters are the recommended starting point; see the
    [hardware note](#hardware-note) below.
-2. Select the CNC profile. Its default COM port appears automatically.
+2. Add or import and review a CNC profile, then select it. Its saved COM port appears automatically.
 3. If Windows assigned another port, type it into the COM port box.
 4. To send the whole program immediately, choose **Send program**. The small
    arrow beside it offers partial sends from the current line or preceding
@@ -175,8 +158,8 @@ header, with separate high-contrast artwork for light and dark themes.
 
 - Choose **Edit profile** to change any setting on the selected built-in or
   custom profile.
-- Choose **Add profile** to copy the selected profile as a starting point for a
-  new CNC.
+- Choose **Add profile** to copy the selected profile, or create a new local
+  setup when none exists. Review all fields before using it.
 - Choose **Shown profiles…** to decide which library and custom profiles appear
   in the main dropdown. Hidden profiles remain available and can be shown again.
 - Custom profiles can be removed with **Delete**. Built-in profiles
@@ -193,11 +176,11 @@ other DNC software before starting an operation.
 
 ## Community configurations
 
-Select one profile and choose **Share**. Enter a public machine/controller description and optional notes, review the exact post, then choose **Copy and open GitHub**. Sign in if needed, paste into the issue description with **Ctrl+V**, and click **Submit new issue**. No file handling or Git installation is needed; an optional **Save JSON copy** remains available. GitHub requires an account and existing access to this private repository.
+Select one profile and choose **Share**. Enter a public machine/controller description and optional notes, review the exact post, then choose **Copy and open GitHub**. Sign in if needed, paste into the issue description with **Ctrl+V**, and click **Submit new issue**. No file handling or Git installation is needed; an optional **Save JSON copy** remains available. Posting an issue or comment requires a GitHub account. Downloading files from a public repository does not.
 
-Use **Community configurations** to preview a shared JSON file or bundled entry and add a new custom copy with your own COM port. All 18 originals remain available; imports never replace them. Status is **Confirmed** or **Not confirmed**. Confirmation covers only the original setup and supported tested operations, not every machine or edited local copy. The initial community catalog is empty. The app never posts or uploads automatically.
+Use **Community configurations** to preview a shared JSON file or bundled entry and add a new custom copy with your own COM port. The 15 unverified starter files live in the repository rather than the installed app; imports never replace existing profiles. Status distinguishes owner-reported tested setups from independently confirmed evidence; external files remain **Not confirmed**. Confirmation covers only the original setup and supported tested operations, not every machine or edited local copy. Three user-reported tested profiles are available for explicit review and addition; none are installed or selected automatically. The app never posts or uploads automatically.
 
-See [sharing, importing and review instructions](docs/COMMUNITY-CONFIGURATIONS.md). The repository remains private; no public contribution program or website change is included.
+See [sharing, importing and review instructions](docs/COMMUNITY-CONFIGURATIONS.md). Publication is a separate release step; these instructions do not establish that a downloadable release is already live.
 
 ## Hardware note
 

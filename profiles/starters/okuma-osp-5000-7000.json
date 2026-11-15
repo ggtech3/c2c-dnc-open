@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "title": "Okuma OSP 5000 / 7000 (starting point)",
+  "settings": {
+    "baudRate": 4800,
+    "dataBits": 7,
+    "parity": "Even",
+    "stopBits": "One",
+    "handshake": "XOnXOff",
+    "dtrEnable": true,
+    "rtsEnable": true,
+    "newLine": "\n",
+    "lineDelayMilliseconds": 20,
+    "receivePercentFramed": true,
+    "receiveIdleTimeoutSeconds": 5,
+    "stripNulls": true,
+    "removeWhitespace": false,
+    "omitParenthesisLines": false,
+    "omitLinesContainingParenthesis": false,
+    "removeReceiveControlCharacters": false,
+    "checkParity": false,
+    "parityReplaceCharacter": 0
+  },
+  "context": {
+    "machine": "Okuma OSP 5000 / 7000 (starting point)",
+    "controller": "Okuma OSP 5000 / 7000 (starting point)",
+    "firmwareOptions": "Not recorded; confirm your control revision",
+    "machineSideSettings": "Match every portable setting below with the machine",
+    "adapterDriver": "Not recorded; verify your adapter/driver",
+    "cableWiring": "Not recorded; verify cable pinout",
+    "applicationVersion": "Historical C2C DNC setup",
+    "testDate": "",
+    "sendResult": "NotTested",
+    "receiveResult": "NotTested",
+    "dripFeedResult": "NotTested",
+    "limitations": "UNVERIFIED STARTER ONLY. No hardware validation claimed. Use ISO and DC-code flow control; verify CN0, read/punch device numbers, delimiter, EOB, and optional parameter bits. Reference: https://www.cncapplications.co.uk/support/Okuma_OSP-5000.pdf",
+    "contributorAlias": null
+  }
+}

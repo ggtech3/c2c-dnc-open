@@ -12,7 +12,7 @@ class Program
 {
     static int passed, failed;
     static SerialDncService service = new();
-    static CncProfile P => CncProfile.BuiltIn[0] with { PortName="SIM-ONLY", LineDelayMilliseconds=0 };
+    static CncProfile P => ProfileFixtures.Baseline[0] with { PortName="SIM-ONLY", LineDelayMilliseconds=0 };
     static FakeSerialPort Last => FakeSerialPort.Instances.Last();
     static void Assert(bool b, string message) { if(!b) throw new Exception(message); }
     static void Reset(Scenario? s=null) { FakeSerialPort.Next = s ?? new(); FakeSerialPort.Instances.Clear(); }
@@ -35,9 +35,9 @@ class Program
                 Assert(r.Items.Last().Percent==100 && r.Items.Last().BytesProcessed==Last.Output.Count,"Totals mismatch"); Closed();
             }
         });
-        await Test("All 18 built-in profile settings mapped to fake endpoint", async ()=>{
-            Assert(CncProfile.BuiltIn.Count==18,"Profile count");
-            foreach(var original in CncProfile.BuiltIn) {
+        await Test("All 18 historical starter profile settings mapped to fake endpoint", async ()=>{
+            Assert(ProfileFixtures.Baseline.Count==18,"Profile count");
+            foreach(var original in ProfileFixtures.Baseline) {
                 Reset(); var p=original with {PortName="SIM-ONLY",LineDelayMilliseconds=0}; await Send(p,"M30",new());
                 var f=Last;
                 Assert(f.PortName==p.PortName && f.BaudRate==p.BaudRate && f.DataBits==p.DataBits && f.Parity==p.Parity && f.StopBits==p.StopBits && f.Handshake==p.Handshake,"Framing");
