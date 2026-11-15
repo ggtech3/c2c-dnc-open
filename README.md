@@ -1,5 +1,20 @@
 # C2C DNC
 
+## Download for Windows
+
+### [Download the Windows app (ZIP)](https://github.com/ggtech3/c2c-dnc-open/releases/download/v0.9.8-open-preview.2/C2C-DNC-Open-0.9.8-open-preview.2-win-x64.zip)
+
+**Ready-to-run Windows x64 app · 0.9.8-open-preview.2 · No GitHub account needed**
+
+1. Download the ZIP using the link above.
+2. Right-click the ZIP and choose **Extract All**. Keep the extracted files together.
+3. Open the extracted folder and run **`C2CDncOpenPreview.exe`**.
+
+You do not need Git, Visual Studio or the .NET SDK. This preview is unsigned.
+**Do not use the green Code → Download ZIP button or Source code (zip)** to get the app. Those contain source code, not the ready-to-run executable.
+
+[Release notes and checksums](https://github.com/ggtech3/c2c-dnc-open/releases/tag/v0.9.8-open-preview.2)
+
 ## Repository status and development
 
 C2C-owned source and starter profiles are licensed under the [MIT License](LICENSE). Read [licensing status](LICENSE-STATUS.md), [contributing](CONTRIBUTING.md), [security](SECURITY.md), [governance](GOVERNANCE.md) and the [Spec Kit workflow](docs/SPEC-KIT.md).
